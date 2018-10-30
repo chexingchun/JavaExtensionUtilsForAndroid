@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-import com.wonium.extension.utils.DeviceUtil;
+import com.wonium.extension.utils.DevicesInfoUtil;
 
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvMac = findViewById(R.id.tvMac);
-        tvMac.setText(DeviceUtil.getMacAddress(this) + "<--->" + getMacAddr() + "------>" + getMac());
+        tvMac.setText(DevicesInfoUtil.getMacAddress(this) + "<--->" + getMacAddr() + "------>" + getMac());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             Process pp = Runtime.getRuntime().exec("cat /sys/class/net/wlan0/address ");
             InputStreamReader ir = new InputStreamReader(pp.getInputStream());
             LineNumberReader input = new LineNumberReader(ir);
-
             for (; null != str; ) {
                 str = input.readLine();
                 if (str != null) {

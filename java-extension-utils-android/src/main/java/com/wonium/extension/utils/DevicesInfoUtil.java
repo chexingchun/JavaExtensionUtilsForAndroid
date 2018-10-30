@@ -12,26 +12,26 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-
-public class DeviceUtil {
-    private static final String TAG = "DeviceUtil";
+/**
+ * 设备信息类
+ * @author Wonium
+ */
+public class DevicesInfoUtil {
+    private static final String TAG = "DevicesInfoUtil";
 
     /**
      * 获取MacAddr
-     *
      * @return macAddress
      */
     @SuppressLint("HardwareIds")
     public static String getMacAddress(Context context) {
-        String macAddress = "00:00:00:00:00:00";
-
+        String macAddress = "02:00:00:00:00:00";
         try {
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 WifiManager manager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                assert manager != null;
                 WifiInfo info = manager.getConnectionInfo();
                 macAddress = info.getMacAddress();
-
             } else {
                 InetAddress ip = getLocalInetAddress();
                 byte[] b = NetworkInterface.getByInetAddress(ip).getHardwareAddress();
@@ -55,25 +55,26 @@ public class DeviceUtil {
         InetAddress ip = null;
         try {
             // 列举
-            Enumeration<NetworkInterface> en_netInterface = NetworkInterface.getNetworkInterfaces();
-            while (en_netInterface.hasMoreElements()) {// 是否还有元素
-                NetworkInterface ni = en_netInterface.nextElement();// 得到下一个元素
-                Enumeration<InetAddress> en_ip = ni.getInetAddresses();// 得到一个ip地址的列举
-                while (en_ip.hasMoreElements()) {
-                    ip = en_ip.nextElement();
-                    if (!ip.isLoopbackAddress()
-                            && !ip.getHostAddress().contains(":"))
+            Enumeration<NetworkInterface> netInterface = NetworkInterface.getNetworkInterfaces();
+            // 是否还有元素
+            while (netInterface.hasMoreElements()) {
+                // 得到下一个元素
+                NetworkInterface ni = netInterface.nextElement();
+                // 得到一个ip地址的列举
+                Enumeration<InetAddress> inetAddresses = ni.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    ip = inetAddresses.nextElement();
+                    if (!ip.isLoopbackAddress() && !ip.getHostAddress().contains(":")){
                         break;
-                    else
+                    }else {
                         ip = null;
+                    }
                 }
-
                 if (ip != null) {
                     break;
                 }
             }
         } catch (SocketException e) {
-
             e.printStackTrace();
         }
         return ip;
