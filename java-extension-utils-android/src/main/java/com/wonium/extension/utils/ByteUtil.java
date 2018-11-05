@@ -11,22 +11,11 @@ import java.nio.ByteBuffer;
  * @ ModifyDescription
  * @ ModifyDate 2018/7/24
  **/
-public class ByteUtil {
+public enum  ByteUtil {
 
-    private ByteUtil() { }
 
-    private static ByteUtil mInstance = null;
+    INSTANCE;
 
-    public static ByteUtil getInstance() {
-        if (mInstance == null) {
-            synchronized (ByteUtil.class) {
-                if (mInstance == null) {
-                    mInstance = new ByteUtil();
-                }
-            }
-        }
-        return mInstance;
-    }
 
     public void putShort(byte b[], short s, int index) {
         b[index + 1] = (byte) (s >> 8);
