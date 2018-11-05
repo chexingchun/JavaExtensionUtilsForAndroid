@@ -13,8 +13,9 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 
-public class DeviceUtil {
-    private static final String TAG = "DeviceUtil";
+public enum DeviceUtil {
+
+    INSTANCE;
 
     /**
      * 获取MacAddr
@@ -22,7 +23,7 @@ public class DeviceUtil {
      * @return macAddress
      */
     @SuppressLint("HardwareIds")
-    public static String getMacAddress(Context context) {
+    public String getMacAddress(Context context) {
         String macAddress = "00:00:00:00:00:00";
 
         try {
@@ -51,7 +52,7 @@ public class DeviceUtil {
         return macAddress;
     }
 
-    private static InetAddress getLocalInetAddress() {
+    private InetAddress getLocalInetAddress() {
         InetAddress ip = null;
         try {
             // 列举
