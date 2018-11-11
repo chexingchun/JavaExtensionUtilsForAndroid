@@ -12,10 +12,21 @@ import com.wonium.extension.R;
 
 
 /**
- * Created by haiquan on 2016/6/1.
- * Email jsxzfxhhq@qq.com
+ * @ClassName: ToastUtil.java
+ * @Description: Toast工具类
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/11 11:04
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2018/11/11 11:04
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
  */
 public enum ToastUtil {
+    /**
+     * 实例对象
+     */
     INSTANCE;
     private static boolean isToast = true;
 
@@ -93,7 +104,7 @@ public enum ToastUtil {
      * @param content  显示内容
      * @param duration 持续时间
      */
-    public static void showCustomToast(Context context, CharSequence content, int duration) {
+    public  void showCustomToast(Context context, CharSequence content, int duration) {
 
         View view1 = LayoutInflater.from(context).inflate(R.layout.layout_toast_view, null, false);
         TextView textView = view1.findViewById(R.id.tv_toast_text);
