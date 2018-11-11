@@ -1,5 +1,6 @@
 package com.wonium.extension.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -35,25 +36,84 @@ import java.util.zip.ZipOutputStream;
  *@ModifyDate 2018/7/19
  **/
 public enum  FileUtil {
-
+    /**
+     * 实例对象
+     */
     INSTANCE;
 
-    //分隔符.
+    /**
+     * 分隔符.
+     */
 
     public final static String FILE_EXTENSION_SEPARATOR = ".";
 
-    //"/"
+    /**
+     * "/"
+     */
 
-    public final static String SEP = File.separator;
+    public final static String SEPARATOR = File.separator;
 
 
-   //SD卡根目录
+    /**
+     * SD卡根目录
+     */
 
-    public static final String SDPATH = Environment.getExternalStorageDirectory() + File.separator;
+    public static final String SD_PATH = Environment.getExternalStorageDirectory() + File.separator;
 
-    //SD卡根目录
 
-    public static final String SDPATH_1 = Environment.getExternalStorageDirectory().toString();
+
+    /**
+     * 读取文本数据
+     * @param context  程序上下文
+     * @param fileName 文件名
+     * @return String, 读取到的文本内容，失败返回null
+     */
+    public  String readAssetsFile(Context context, String fileName) {
+        InputStream is = null;
+        String content = null;
+        try
+        {
+            is = context.getAssets().open(fileName);
+
+            byte[] buffer = new byte[1024];
+            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+            while (true)
+            {
+                int readLength = is.read(buffer);
+                if (readLength == -1) {
+                    break;
+                }
+                arrayOutputStream.write(buffer, 0, readLength);
+            }
+            is.close();
+            arrayOutputStream.close();
+            content = new String(arrayOutputStream.toByteArray());
+
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            content = null;
+        }
+        finally
+        {
+            try
+            {
+                if (is != null) {
+                    is.close();
+                }
+            }
+            catch (IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
+        }
+        return content;
+    }
 
     /**
      * 判断SD卡是否可用
@@ -73,7 +133,7 @@ public enum  FileUtil {
      */
     public  String generateFilePath(String dir,String name,String uffix){
 
-         String filePath = SDPATH_1 + dir+ "/"+name+uffix;
+         String filePath = SEPARATOR + dir+ SEPARATOR+name+uffix;
          if (!FileUtil.INSTANCE.isFileExist(filePath)){
              File file =new File(filePath);
              File fileDir =file.getParentFile();
@@ -84,11 +144,6 @@ public enum  FileUtil {
          }
         return filePath;
     }
-
-
-
-
-
 
 
     /**
@@ -136,24 +191,28 @@ public enum  FileUtil {
      * @param charsetName 字符编码
      * @return String字符串
      */
-    public  String readFile(String filePath, String charsetName)
-            throws IOException {
-        if (TextUtils.isEmpty(filePath))
+    public  String readFile(String filePath, String charsetName) throws IOException {
+        if (TextUtils.isEmpty(filePath)){
             return null;
-        if (TextUtils.isEmpty(charsetName))
+        }
+
+        if (TextUtils.isEmpty(charsetName)){
             charsetName = "utf-8";
+        }
+
         File file = new File(filePath);
-        StringBuilder fileContent = new StringBuilder("");
-        if (!file.isFile())
+        StringBuilder fileContent = new StringBuilder();
+        if (!file.isFile()){
             return null;
+        }
+
         BufferedReader reader = null;
         try {
-            InputStreamReader is = new InputStreamReader(new FileInputStream(
-                    file), charsetName);
+            InputStreamReader is = new InputStreamReader(new FileInputStream(file), charsetName);
             reader = new BufferedReader(is);
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!fileContent.toString().equals("")) {
+                if (!"".equals(fileContent.toString())) {
                     fileContent.append("\r\n");
                 }
                 fileContent.append(line);
@@ -177,8 +236,7 @@ public enum  FileUtil {
      * @return 文件不存在返回null，否则返回字符串集合
      * @throws IOException
      */
-    public  List<String> readFileToList(String filePath)
-            throws IOException {
+    public  List<String> readFileToList(String filePath) throws IOException {
         return readFileToList(filePath, "utf-8");
     }
 
@@ -189,23 +247,25 @@ public enum  FileUtil {
      * @param charsetName 字符编码
      * @return 文件不存在返回null，否则返回字符串集合
      */
-    public  List<String> readFileToList(String filePath,
-                                              String charsetName) throws IOException {
-        if (TextUtils.isEmpty(filePath))
+    public  List<String> readFileToList(String filePath, String charsetName) throws IOException {
+        if (TextUtils.isEmpty(filePath)){
             return null;
-        if (TextUtils.isEmpty(charsetName))
+        }
+
+        if (TextUtils.isEmpty(charsetName)){
             charsetName = "utf-8";
+        }
+
         File file = new File(filePath);
-        List<String> fileContent = new ArrayList<String>();
+        List<String> fileContent = new ArrayList<>();
         if (!file.isFile()) {
             return null;
         }
         BufferedReader reader = null;
         try {
-            InputStreamReader is = new InputStreamReader(new FileInputStream(
-                    file), charsetName);
+            InputStreamReader is = new InputStreamReader(new FileInputStream(file), charsetName);
             reader = new BufferedReader(is);
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 fileContent.add(line);
             }
@@ -223,19 +283,21 @@ public enum  FileUtil {
 
     /**
      * 向文件中写入数据
-     *
      * @param filePath 文件目录
      * @param content  要写入的内容
      * @param append   如果为 true，则将数据写入文件末尾处，而不是写入文件开始处
      * @return 写入成功返回true， 写入失败返回false
      * @throws IOException
      */
-    public  boolean writeFile(String filePath, String content,
-                                    boolean append) throws IOException {
-        if (TextUtils.isEmpty(filePath))
+    public  boolean writeFile(String filePath, String content, boolean append) throws IOException {
+        if (TextUtils.isEmpty(filePath)){
             return false;
-        if (TextUtils.isEmpty(content))
+        }
+
+        if (TextUtils.isEmpty(content)){
             return false;
+        }
+
         FileWriter fileWriter = null;
         try {
             createFile(filePath);
@@ -258,20 +320,17 @@ public enum  FileUtil {
     /**
      * 向文件中写入数据<br>
      * 默认在文件开始处重新写入数据
-     *
      * @param filePath 文件目录
      * @param stream   字节输入流
      * @return 写入成功返回true，否则返回false
      * @throws IOException
      */
-    public  boolean writeFile(String filePath, InputStream stream)
-            throws IOException {
+    public  boolean writeFile(String filePath, InputStream stream) throws IOException {
         return writeFile(filePath, stream, false);
     }
 
     /**
      * 向文件中写入数据
-     *
      * @param filePath 文件目录
      * @param stream   字节输入流
      * @param append   如果为 true，则将数据写入文件末尾处；
@@ -280,10 +339,12 @@ public enum  FileUtil {
      * @throws IOException
      */
     public  boolean writeFile(String filePath, InputStream stream, boolean append) throws IOException {
-        if (TextUtils.isEmpty(filePath))
+        if (TextUtils.isEmpty(filePath)){
             throw new NullPointerException("filePath is Empty");
-        if (stream == null)
+        }
+        if (stream == null){
             throw new NullPointerException("InputStream is null");
+        }
         return writeFile(new File(filePath), stream, append);
     }
 
@@ -311,7 +372,6 @@ public enum  FileUtil {
     /**
      * 向文件中写入数据
      * 默认在文件开始处重新写入数据
-     *
      * @param file   指定文件
      * @param stream 字节输入流
      * @return 写入成功返回true，否则返回false
@@ -332,14 +392,16 @@ public enum  FileUtil {
      * @throws IOException
      */
     public  boolean writeFile(File file, InputStream stream, boolean append) throws IOException {
-        if (file == null)
+        if (file == null){
             throw new NullPointerException("file = null");
+        }
+
         OutputStream out = null;
         try {
             createFile(file.getAbsolutePath());
             out = new FileOutputStream(file, append);
-            byte data[] = new byte[1024];
-            int length = -1;
+            byte[] data = new byte[1024];
+            int length;
             while ((length = stream.read(data)) != -1) {
                 out.write(data, 0, length);
             }
@@ -357,10 +419,7 @@ public enum  FileUtil {
         }
     }
 
-    public  boolean copyFile(InputStream inputStream, String destFilePath)
-            throws IOException {
-//        InputStream inputStream = null;
-//        inputStream = new FileInputStream(sourceFilePath);
+    public  boolean copyFile(InputStream inputStream, String destFilePath) throws IOException {
         return writeFile(destFilePath, inputStream);
     }
 
@@ -372,9 +431,8 @@ public enum  FileUtil {
      * @return 复制文件成功返回true，否则返回false
      * @throws IOException
      */
-    public  boolean copyFile(String sourceFilePath, String destFilePath)
-            throws IOException {
-        InputStream inputStream = null;
+    public  boolean copyFile(String sourceFilePath, String destFilePath) throws IOException {
+        InputStream inputStream;
         inputStream = new FileInputStream(sourceFilePath);
         return writeFile(destFilePath, inputStream);
     }
@@ -387,22 +445,28 @@ public enum  FileUtil {
      * @param fileFilter 过滤器
      * @return 某个目录下的所有文件名
      */
-    public  List<String> getFileNameList(String dirPath,
-                                               FilenameFilter fileFilter) {
-        if (fileFilter == null)
+    public  List<String> getFileNameList(String dirPath, FilenameFilter fileFilter) {
+        if (fileFilter == null){
             return getFileNameList(dirPath);
-        if (TextUtils.isEmpty(dirPath))
+        }
+
+        if (TextUtils.isEmpty(dirPath)){
             return Collections.emptyList();
+        }
+
         File dir = new File(dirPath);
 
         File[] files = dir.listFiles(fileFilter);
-        if (files == null)
+        if (files == null){
             return Collections.emptyList();
+        }
 
-        List<String> conList = new ArrayList<String>();
+
+        List<String> conList = new ArrayList<>();
         for (File file : files) {
-            if (file.isFile())
+            if (file.isFile()){
                 conList.add(file.getName());
+            }
         }
         return conList;
     }
@@ -414,16 +478,21 @@ public enum  FileUtil {
      * @return 某个目录下的所有文件名
      */
     public  List<String> getFileNameList(String dirPath) {
-        if (TextUtils.isEmpty(dirPath))
+        if (TextUtils.isEmpty(dirPath)){
             return Collections.emptyList();
+        }
+
         File dir = new File(dirPath);
         File[] files = dir.listFiles();
-        if (files == null)
+        if (files == null){
             return Collections.emptyList();
-        List<String> conList = new ArrayList<String>();
+        }
+
+        List<String> conList = new ArrayList<>();
         for (File file : files) {
-            if (file.isFile())
+            if (file.isFile()){
                 conList.add(file.getName());
+            }
         }
         return conList;
     }
@@ -434,26 +503,23 @@ public enum  FileUtil {
      * @param dirPath 目录
      * @return 某个目录下的所有文件名
      */
-    public  List<String> getFileNameList(String dirPath,
-                                               final String extension) {
-        if (TextUtils.isEmpty(dirPath))
+    public  List<String> getFileNameList(String dirPath, final String extension) {
+        if (TextUtils.isEmpty(dirPath)){
             return Collections.emptyList();
-        File dir = new File(dirPath);
-        File[] files = dir.listFiles(new FilenameFilter() {
+        }
 
-            @Override
-            public boolean accept(File dir, String filename) {
-                if (filename.indexOf("." + extension) > 0)
-                    return true;
-                return false;
-            }
-        });
-        if (files == null)
+        File dir = new File(dirPath);
+        File[] files = dir.listFiles((dir1, filename) -> filename.indexOf("." + extension) > 0);
+        if (files == null){
             return Collections.emptyList();
-        List<String> conList = new ArrayList<String>();
+        }
+
+        List<String> conList = new ArrayList<>();
         for (File file : files) {
-            if (file.isFile())
+            if (file.isFile()){
                 conList.add(file.getName());
+            }
+
         }
         return conList;
     }
@@ -483,8 +549,10 @@ public enum  FileUtil {
      * @return
      */
     public  boolean createFile(String path) {
-        if (TextUtils.isEmpty(path))
+        if (TextUtils.isEmpty(path)){
             return false;
+        }
+
         return createFile(new File(path));
     }
 
@@ -495,15 +563,17 @@ public enum  FileUtil {
      * @return 创建成功返回true
      */
     public  boolean createFile(File file) {
-        if (file == null || !makeDirs(getFolderName(file.getAbsolutePath())))
+        if (file == null || !makeDirs(getFolderName(file.getAbsolutePath()))) {
             return false;
-        if (!file.exists())
+        }
+        if (!file.exists()) {
             try {
                 return file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
             }
+        }
         return false;
     }
 
@@ -528,9 +598,10 @@ public enum  FileUtil {
      * @return 如果目录创建成功，则返回true，否则返回false
      */
     public  boolean makeDirs(File dir) {
-        if (dir == null)
+        if (dir == null) {
             return false;
-        return (dir.exists() && dir.isDirectory()) ? true : dir.mkdirs();
+        }
+        return (dir.exists() && dir.isDirectory()) || dir.mkdirs();
     }
 
     /**
@@ -636,8 +707,9 @@ public enum  FileUtil {
      * 文件删除异常返回false
      */
     public  boolean deleteFile(File file) {
-        if (file == null)
+        if (file == null) {
             throw new NullPointerException("file is null");
+        }
         if (!file.exists()) {
             return true;
         }
@@ -649,8 +721,9 @@ public enum  FileUtil {
         }
 
         File[] files = file.listFiles();
-        if (files == null)
+        if (files == null) {
             return true;
+        }
         for (File f : files) {
             if (f.isFile()) {
                 f.delete();
@@ -668,24 +741,30 @@ public enum  FileUtil {
      * @param filter
      */
     public  void delete(String dir, FilenameFilter filter) {
-        if (TextUtils.isEmpty(dir))
+        if (TextUtils.isEmpty(dir)) {
             return;
+        }
         File file = new File(dir);
-        if (!file.exists())
+        if (!file.exists()) {
             return;
-        if (file.isFile())
+        }
+        if (file.isFile()) {
             file.delete();
-        if (!file.isDirectory())
+        }
+        if (!file.isDirectory()) {
             return;
+        }
 
         File[] lists;
-        if (filter != null)
+        if (filter != null) {
             lists = file.listFiles(filter);
-        else
+        } else {
             lists = file.listFiles();
+        }
 
-        if (lists == null)
+        if (lists == null) {
             return;
+        }
         for (File f : lists) {
             if (f.isFile()) {
                 f.delete();
@@ -708,15 +787,7 @@ public enum  FileUtil {
     }
 
 
-    /**
-     * ======================play
-     */
 
-    final static String TAG = "LedPlayer.FileUtils";
-
-    public final static String EXTERNAL_STORAGE_DIRECTORY = Environment.getExternalStorageDirectory().toString();
-
-    public static final String ZHLEDDataV5 = "/ZHLEDDataV5/Resource/";
 
 
     public  boolean checkFileExists(String path) {
@@ -739,9 +810,9 @@ public enum  FileUtil {
         suffixList.add("pptx");
         suffixList.add("pptm");
 
-        String low_suffix = suffix.toLowerCase();
+        String lowSuffix = suffix.toLowerCase();
         for (String value : suffixList) {
-            if (low_suffix.contains(value)) {
+            if (lowSuffix.contains(value)) {
                 return true;
             }
         }
@@ -755,19 +826,24 @@ public enum  FileUtil {
      * @return
      */
     public  String fileToMD5(InputStream inputStream) {
-//        InputStream inputStream = null;
         try {
-//            inputStream = new FileInputStream(filePath); // Create an FileInputStream instance according to the filepath
-            byte[] buffer = new byte[1024]; // The buffer to read the file
-            MessageDigest digest = MessageDigest.getInstance("MD5"); // Get a MD5 instance
-            int numRead = 0; // Record how many bytes have been read
+            // The buffer to read the file
+            byte[] buffer = new byte[1024];
+            // Get a MD5 instance
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            // Record how many bytes have been read
+            int numRead = 0;
             while (numRead != -1) {
                 numRead = inputStream.read(buffer);
-                if (numRead > 0)
-                    digest.update(buffer, 0, numRead); // Update the digest
+                if (numRead > 0) {
+                    // Update the digest
+                    digest.update(buffer, 0, numRead);
+                }
             }
-            byte[] md5Bytes = digest.digest(); // Complete the hash computing
-            return convertHashToString(md5Bytes); // Call the function to convert to hex digits
+            // Complete the hash computing
+            byte[] md5Bytes = digest.digest();
+            // Call the function to convert to hex digits
+            return convertHashToString(md5Bytes);
         } catch (Exception e) {
             return null;
         } finally {
@@ -775,6 +851,7 @@ public enum  FileUtil {
                 try {
                     inputStream.close(); // Close the InputStream
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -789,17 +866,25 @@ public enum  FileUtil {
     public  String fileToMD5(String filePath) {
         InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(filePath); // Create an FileInputStream instance according to the filepath
-            byte[] buffer = new byte[1024]; // The buffer to read the file
-            MessageDigest digest = MessageDigest.getInstance("MD5"); // Get a MD5 instance
-            int numRead = 0; // Record how many bytes have been read
+            // Create an FileInputStream instance according to the filepath
+            inputStream = new FileInputStream(filePath);
+            // The buffer to read the file
+            byte[] buffer = new byte[1024];
+            // Get a MD5 instance
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            // Record how many bytes have been read
+            int numRead = 0;
             while (numRead != -1) {
                 numRead = inputStream.read(buffer);
-                if (numRead > 0)
-                    digest.update(buffer, 0, numRead); // Update the digest
+                if (numRead > 0) {
+                    // Update the digest
+                    digest.update(buffer, 0, numRead);
+                }
             }
-            byte[] md5Bytes = digest.digest(); // Complete the hash computing
-            return convertHashToString(md5Bytes); // Call the function to convert to hex digits
+            // Complete the hash computing
+            byte[] md5Bytes = digest.digest();
+            // Call the function to convert to hex digits
+            return convertHashToString(md5Bytes);
         } catch (Exception e) {
             return null;
         } finally {
@@ -807,6 +892,7 @@ public enum  FileUtil {
                 try {
                     inputStream.close(); // Close the InputStream
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -821,17 +907,25 @@ public enum  FileUtil {
     public  String fileToSHA1(String filePath) {
         InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(filePath); // Create an FileInputStream instance according to the filepath
-            byte[] buffer = new byte[1024]; // The buffer to read the file
-            MessageDigest digest = MessageDigest.getInstance("SHA-1"); // Get a SHA-1 instance
-            int numRead = 0; // Record how many bytes have been read
+            // Create an FileInputStream instance according to the filepath
+            inputStream = new FileInputStream(filePath);
+            // The buffer to read the file
+            byte[] buffer = new byte[1024];
+            // Get a SHA-1 instance
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            // Record how many bytes have been read
+            int numRead = 0;
             while (numRead != -1) {
                 numRead = inputStream.read(buffer);
-                if (numRead > 0)
-                    digest.update(buffer, 0, numRead); // Update the digest
+                if (numRead > 0) {
+                    // Update the digest
+                    digest.update(buffer, 0, numRead);
+                }
             }
-            byte[] sha1Bytes = digest.digest(); // Complete the hash computing
-            return convertHashToString(sha1Bytes); // Call the function to convert to hex digits
+            // Complete the hash computing
+            byte[] sha1Bytes = digest.digest();
+            // Call the function to convert to hex digits
+            return convertHashToString(sha1Bytes);
         } catch (Exception e) {
             return null;
         } finally {
@@ -839,6 +933,7 @@ public enum  FileUtil {
                 try {
                     inputStream.close(); // Close the InputStream
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -846,28 +941,19 @@ public enum  FileUtil {
 
     /**
      * Convert the hash bytes to hex digits string
-     *
      * @param hashBytes
      * @return The converted hex digits string
      */
     public  String convertHashToString(byte[] hashBytes) {
-        String returnVal = "";
-        for (int i = 0; i < hashBytes.length; i++) {
-            returnVal += Integer.toString((hashBytes[i] & 0xff) + 0x100, 16).substring(1);
+        StringBuilder returnVal = new StringBuilder();
+        for (byte hashByte : hashBytes) {
+            returnVal.append(Integer.toString((hashByte & 0xff) + 0x100, 16).substring(1));
         }
-        return returnVal.toLowerCase();
+        return returnVal.toString().toLowerCase();
     }
-    /**
-     * 保存图片 图片保存地址和格式均默认
-     * @param bitmap
-     * @param name 图片名称
-     */
-
-
 
     /**
      * 将字符串转成MD5值
-     *
      * @param string 需要转换的字符串
      * @return 字符串的MD5值
      */
@@ -886,8 +972,9 @@ public enum  FileUtil {
 
         StringBuilder hex = new StringBuilder(hash.length * 2);
         for (byte b : hash) {
-            if ((b & 0xFF) < 0x10)
+            if ((b & 0xFF) < 0x10) {
                 hex.append("0");
+            }
             hex.append(Integer.toHexString(b & 0xFF));
         }
 
@@ -899,9 +986,10 @@ public enum  FileUtil {
         //提供了一个数据项压缩成一个ZIP归档输出流
         ZipOutputStream out = null;
         try {
-
-            File outFile = new File(dest);//源文件或者目录
-            File fileOrDirectory = new File(src);//压缩文件路径
+            //源文件或者目录
+            File outFile = new File(dest);
+            //压缩文件路径
+            File fileOrDirectory = new File(src);
             out = new ZipOutputStream(new FileOutputStream(outFile));
             //如果此文件是一个文件，否则为false。
             if (fileOrDirectory.isFile()) {
@@ -909,9 +997,9 @@ public enum  FileUtil {
             } else {
                 //返回一个文件或空阵列。
                 File[] entries = fileOrDirectory.listFiles();
-                for (int i = 0; i < entries.length; i++) {
+                for (File entry : entries) {
                     // 递归压缩，更新curPaths
-                    zipFileOrDirectory(out, entries[i], "");
+                    zipFileOrDirectory(out, entry, "");
                 }
             }
         } catch (IOException ex) {
@@ -928,8 +1016,7 @@ public enum  FileUtil {
         }
     }
 
-    private  void zipFileOrDirectory(ZipOutputStream out,
-                                           File fileOrDirectory, String curPath) {
+    private  void zipFileOrDirectory(ZipOutputStream out, File fileOrDirectory, String curPath) {
         //从文件中读取字节的输入流
         FileInputStream in = null;
         try {
@@ -937,24 +1024,23 @@ public enum  FileUtil {
             if (!fileOrDirectory.isDirectory()) {
                 // 压缩文件
                 byte[] buffer = new byte[4096];
-                int bytes_read;
+                int bytesRead;
                 in = new FileInputStream(fileOrDirectory);
                 //实例代表一个条目内的ZIP归档
                 ZipEntry entry = new ZipEntry(curPath
                         + fileOrDirectory.getName());
                 //条目的信息写入底层流
                 out.putNextEntry(entry);
-                while ((bytes_read = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, bytes_read);
+                while ((bytesRead = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
                 }
                 out.closeEntry();
             } else {
                 // 压缩目录
                 File[] entries = fileOrDirectory.listFiles();
-                for (int i = 0; i < entries.length; i++) {
+                for (File entry : entries) {
                     // 递归压缩，更新curPaths
-                    zipFileOrDirectory(out, entries[i], curPath
-                            + fileOrDirectory.getName() + "/");
+                    zipFileOrDirectory(out, entry, curPath + fileOrDirectory.getName() + "/");
                 }
             }
         } catch (IOException ex) {
@@ -973,23 +1059,15 @@ public enum  FileUtil {
 
 
     public  int isDataSource(String path){
-        if (path.contains("assets")){
-            return  0;
-        }else {
-            return 1;
-        }
+        return path.contains("assets")?0:1;
     }
 
     /**
      * 判断地址是否为视频
-     * @param path
-     * @return
+     * @param path video path
+     * @return is video return true else return false
      */
     public  boolean isVideo(String path){
-        if (path.toLowerCase().endsWith(".mp4") || path.toLowerCase().endsWith(".3gp") || path.toLowerCase().endsWith(".mov")){
-            return true;
-        }else{
-            return false;
-        }
+        return path.toLowerCase().endsWith(".mp4") || path.toLowerCase().endsWith(".3gp") || path.toLowerCase().endsWith(".mov");
     }
 }

@@ -4,26 +4,86 @@ package com.wonium.extension.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-
 /**
- * @author Wonium
+ * @ClassName: DeviceUtil.java
+ * @Description: 类描述
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/11 20:12
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2018/11/11 20:12
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
  */
 public enum DeviceUtil {
     /**
      * 实例对象
      */
     INSTANCE;
+
+
+    /**
+     * 获取设备IMEI
+     * @param activity
+     * @return
+     */
+
+    public  String getDeviceIMEI(Activity activity) {
+        TelephonyManager manager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+        assert manager != null;
+        return manager.getDeviceId();
+    }
+
+    /**
+     * 获取版本号
+     * @param context
+     * @return
+     */
+    public static int getVersionCode(Context context) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+
+
+
+    /**
+     *获取版本名
+     * @param context
+     * @return 版本名称
+     */
+    public static String getVersionName(Context context){
+        PackageManager manager =context.getPackageManager();
+        try {
+            PackageInfo info =manager.getPackageInfo(context.getPackageName(),0);
+            return  info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "1.0";
+    }
+
 
     /**
      * 获取MacAddr
