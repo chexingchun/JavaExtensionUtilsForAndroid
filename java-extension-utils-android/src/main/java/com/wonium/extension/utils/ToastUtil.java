@@ -104,7 +104,7 @@ public enum ToastUtil {
      * @param content  显示内容
      * @param duration 持续时间
      */
-    public  void showCustomToast(Context context, CharSequence content, int duration) {
+    public void showCustomToast(Context context, CharSequence content, int duration) {
 
         View view1 = LayoutInflater.from(context).inflate(R.layout.layout_toast_view, null, false);
         TextView textView = view1.findViewById(R.id.tv_toast_text);

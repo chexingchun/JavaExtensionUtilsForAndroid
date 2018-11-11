@@ -1,4 +1,4 @@
-package com.wonium.example;
+package com.wonium.utils;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.wonium.example.R;
 import com.wonium.extension.utils.DeviceUtil;
 import com.wonium.extension.utils.ToastUtil;
 

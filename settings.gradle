@@ -1,1 +1,1 @@
-include ':app', ':java-extension-utils-android'
+include ':simple', ':java-extension-utils-android'
