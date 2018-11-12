@@ -1,3 +1,19 @@
+/*
+ * Copyright  2018  wonium
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.wonium.extension.utils;
 
 import android.content.Context;
@@ -24,8 +40,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
-
+/**
+ * @ClassName: BitmapUtil.java
+ * @Description: Bitmap 工具类
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/12 21:01
+ * @UpdateUser: update user
+ * @UpdateDate: 2018/11/12 21:01
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
+ */
 public enum BitmapUtil {
+    /**
+     * 实例对象
+     */
     INSTANCE;
 
     public static final boolean IS_SAVE_BITMAP = false;

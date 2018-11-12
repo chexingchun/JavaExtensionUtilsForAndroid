@@ -1,3 +1,19 @@
+/*
+ * Copyright  2018  wonium
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.wonium.extension.utils;
 
 import android.graphics.Color;
@@ -6,11 +22,27 @@ import com.google.common.primitives.Ints;
 
 import java.util.List;
 
-
+/**  
+ * @ClassName: ColorUtil.java
+ * @Description: 颜色工具类 
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/12 21:02
+ * @UpdateUser: update user
+ * @UpdateDate: 2018/11/12 21:02
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
+ */
 public enum  ColorUtil {
+    /**
+     * 实例对象
+     */
     INSTANCE;
-
-    private   int[] TEXT_COLOR_LIST = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.rgb(255, 0, 255), Color.CYAN};
+    /**
+     * 彩虹色
+     */
+    private   int[] textColorList = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.rgb(255, 0, 255), Color.CYAN};
 
 
     public  int intToColor(int co) {
@@ -31,7 +63,7 @@ public enum  ColorUtil {
 
     public  List<Integer> getSubColors(int start,int length){
         int[] subColor=new int[length];
-        System.arraycopy(ColorUtil.INSTANCE.TEXT_COLOR_LIST,start,subColor,0,length);
+        System.arraycopy(ColorUtil.INSTANCE.textColorList,start,subColor,0,length);
         return colorArrayToList(subColor);
     }
 

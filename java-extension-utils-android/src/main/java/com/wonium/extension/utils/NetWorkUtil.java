@@ -23,7 +23,6 @@ import android.net.NetworkInfo;
 
 import java.util.List;
 
-import static java.util.Objects.isNull;
 
 /**
  * @ClassName: NetWorkUtil.java

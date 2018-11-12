@@ -126,10 +126,10 @@ public class   ACacheUtil {
      * update cache! stream.close(); } catch(FileNotFoundException e){
      * e.printStackTrace() }
      */
-    class XFileOutputStream extends FileOutputStream {
+    class WFileOutputStream extends FileOutputStream {
         File file;
 
-        public XFileOutputStream(File file) throws FileNotFoundException {
+        public WFileOutputStream(File file) throws FileNotFoundException {
             super(file);
             this.file = file;
         }
@@ -367,7 +367,7 @@ public class   ACacheUtil {
      *             if the file can not be created.
      */
     public OutputStream put(String key) throws FileNotFoundException {
-        return new XFileOutputStream(mCache.newFile(key));
+        return new WFileOutputStream(mCache.newFile(key));
     }
 
     /**
