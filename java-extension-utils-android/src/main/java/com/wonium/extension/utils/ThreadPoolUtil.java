@@ -1,3 +1,19 @@
+/*
+ * Copyright  2018  wonium
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.wonium.extension.utils;
 
 import android.support.annotation.NonNull;
@@ -10,15 +26,37 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * @ClassName: ThreadPoolUtil.java
+ * @Description: 类描述
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/12 21:06
+ * @UpdateUser: update user
+ * @UpdateDate: 2018/11/12 21:06
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
+ */
 public enum ThreadPoolUtil {
+    /**
+     * 实例对象
+     */
     INSTANCE;
-    //阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
+
+    /**
+     *阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
+     */
+
     private static BlockingQueue workQueue = new ArrayBlockingQueue(30);
-    //线程池
+    /**
+     * 线程池
+     */
     private static ThreadPoolExecutor threadPool;
 
-    //线程工厂
+    /**
+     * 线程工厂
+     */
     private static ThreadFactory threadFactory = new ThreadFactory() {
         private final AtomicInteger integer = new AtomicInteger();
 
@@ -29,10 +67,10 @@ public enum ThreadPoolUtil {
     };
 
     static {
-        int CORE_POOL_SIZE = 15;
-        int MAX_POOL_SIZE = 50;
-        int KEEP_ALIVE_TIME = 1000 * 30;
-        threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, workQueue, threadFactory);
+        int corePoolSize = 15;
+        int maxPoolSize = 50;
+        int keepAliveTime = 1000 * 30;
+        threadPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue, threadFactory);
     }
 
 

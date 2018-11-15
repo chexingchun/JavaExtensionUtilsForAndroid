@@ -1,7 +1,24 @@
+/*
+ * Copyright  2018  wonium
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.wonium.extension.utils;
 
 import android.text.TextUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -41,9 +58,57 @@ public enum StringUtil {
     }
 
     public String getString(Map map, String key, String defaultValue) {
-        Pattern intPattern = Pattern.compile("^[-\\+]?[\\d]*\\.0*$");
         Object obj = map.get(key);
-        return obj == null ? defaultValue : (obj instanceof Number && intPattern.matcher(obj.toString()).matches() ? String.valueOf(Long.valueOf(((Number) obj).longValue())) : obj.toString());
+        return obj == null ? defaultValue : (obj instanceof Number && Pattern.matches("^[-\\+]?[\\d]*\\.0*$",obj.toString()) ? String.valueOf(Long.valueOf(((Number) obj).longValue())) : obj.toString());
+    }
+    /**
+     * 反转字符串 例如  wonium ->muinow
+     *
+     * @param charset 需反转的字符串
+     * @return 字符串
+     */
+    public  String reverseString(String charset) {
+        charset = isEmpty(charset);
+        char[] chars = charset.toCharArray();
+        StringBuilder buffer = new StringBuilder();
+        for (int i = chars.length - 1; i >= 0; i--) {
+            buffer.append(chars[i]);
+        }
+        return buffer.toString();
     }
 
+
+    /**
+     * 格式化整数 小于10的整数前面补零，大于等于10的整数不变。
+     * @param value 整数
+     * @return 字符型数字
+     */
+    public  String formatInt(int value) {
+        if (value < 10) {
+            return "0" + value;
+        } else {
+            return String.valueOf(value);
+        }
+    }
+
+    /**
+     * 更改字符集
+     * @param str 字符串
+     * @param newCharset 如 utf-8
+     * @return 字符转码成功返回新的字符串，否则返回null
+     * @throws UnsupportedEncodingException
+     */
+    private  String changeCharSet(String str, String newCharset) throws UnsupportedEncodingException {
+        if (str != null) {
+            // 用默认字符编码解码字符串。
+            byte[] bs = str.getBytes();
+            // 用新的字符编码生成字符串
+            return new String(bs, newCharset);
+        }
+        return null;
+    }
+
+    public static void main(String[] args){
+        System.out.print(StringUtil.INSTANCE.reverseString("wonium"));
+    }
 }
