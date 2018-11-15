@@ -36,6 +36,16 @@ public enum  ByteUtil {
      * 实例对象
      */
     INSTANCE;
+    /**
+     * 获取index位置的bit值
+     * @param value 字节数据
+     * @param index 字节数据的bit位索引  index的范围为0-7
+     * @return bit位的值 结果范围为0，1  例如 240 获取bit7位置的bit值  返回1
+     */
+
+    public byte getBitValueByIndex(byte value, int index) {
+        return  (byte) (0x1&value >> index);
+    }
 
 
     public void putShort(byte[] b, short s, int index) {
@@ -218,6 +228,7 @@ public enum  ByteUtil {
         result = (value | result);
         return result;
     }
+
 
     public int putBitValueInt(int value, int offset) {
         return putBitValueInt(0, value, offset);
