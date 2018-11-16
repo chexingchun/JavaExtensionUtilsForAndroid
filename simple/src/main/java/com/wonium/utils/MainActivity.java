@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wonium.example.R;
 import com.wonium.extension.utils.DeviceUtil;
+import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
 
 import ru.alexbykov.nopermission.PermissionHelper;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         permissionHelper = new PermissionHelper(this);
         getWifiSSid();
+
     }
 
     private void getWifiSSid() {
