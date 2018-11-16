@@ -2,18 +2,17 @@
 
 ## 说明
 
-这是一个Android基于JAVA语言的工具类库，该库集成了最常用的工具类，就比如`StringUtil`,'FileUtil','DeviceUtil'等;当前最新版本：[ ![Download](https://api.bintray.com/packages/haiquan/maven/android-extensions-utils/images/download.svg) ](https://bintray.com/haiquan/maven/android-extensions-utils/_latestVersion)
+这是一个Android基于JAVA语言的工具类库，该库集成了最常用的工具类，就比如`StringUtil`,'FileUtil','DeviceUtil'等。
 ## 使用实例
    ```
    StringUtil.INSTANCE.reverseString("wonium");
-
    ```
 ## 使用
 
 
 ### 步骤2
 
-在你的model目录下的build中增加依赖，替换下面`latestVersion`位最新的版本，当前最新的版本: [ ![](https://api.bintray.com/packages/haiquan/maven/android-extensions-utils/images/download.svg) ](https://bintray.com/haiquan/maven/android-extensions-utils/_latestVersion)
+在你的model目录下的build中增加依赖，替换下面`latestVersion`位最新的版本，当前最新的版本: [ ![Download](https://api.bintray.com/packages/haiquan/maven/android-extensions-utils/images/download.svg) ](https://bintray.com/haiquan/maven/android-extensions-utils/_latestVersion)
 
 ```
 dependencies {
