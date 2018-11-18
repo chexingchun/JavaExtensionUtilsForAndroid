@@ -48,6 +48,23 @@
     <dimen name="material_layout_icon">24dp</dimen>
     <dimen name="material_layout_touch_target">48dp</dimen>
     <dimen name="material_layout_button_height">36dp</dimen>
+    <dimen name="material_layout_separator_height_1px">1px</dimen>
+    <dimen name="material_layout_separator_height_1dp">1dp</dimen>
+
+    <dimen name="material_layout_view_left_padding_8dp">8dp</dimen>
+    <dimen name="material_layout_view_right_padding_8dp">8dp</dimen>
+
+    <dimen name="material_layout_view_right_padding_16dp">16dp</dimen>
+    <dimen name="material_layout_view_left_padding_16dp">16dp</dimen>
+
+    <dimen name="material_layout_view_left_margin_8dp">8dp</dimen>
+    <dimen name="material_layout_view_right_margin_8dp">8dp</dimen>
+    <dimen name="material_layout_view_bottom_margin_8dp">8dp</dimen>
+    <dimen name="material_layout_view_top_margin_8dp">8dp</dimen>
+
+    <dimen name="material_layout_view_right_margin_16dp">16dp</dimen>
+    <dimen name="material_layout_view_left_margin_16dp">16dp</dimen>
+
     <!-- Structure -->
     <dimen name="material_layout_app_bar_height">56dp</dimen>
     <dimen name="material_layout_app_bar_horizontal_padding">16dp</dimen>
@@ -98,9 +115,7 @@
     <dimen name="material_component_dialogs_padding_between_text_and_touch_target">24dp</dimen>
     <dimen name="material_component_dialogs_elevation">24dp</dimen>
     <dimen name="material_component_dialogs_padding_below_touch_target_to_dialog_edge">8dp</dimen>
-    <dimen name="material_component_dialogs_padding_between_button_text_right_edge_and_dialog_edge">
-        16dp
-    </dimen>
+    <dimen name="material_component_dialogs_padding_between_button_text_right_edge_and_dialog_edge">16dp</dimen>
     <!-- Dividers -->
     <!-- Expansion panels -->
     <!-- Grid lists -->
@@ -113,7 +128,13 @@
     <!-- Lists -->
     <dimen name="material_component_lists_icon_left_padding">16dp</dimen>
     <dimen name="material_component_lists_text_left_padding">72dp</dimen>
-    <dimen name="material_component_lists_right_padding">16dp</dimen>
+    <dimen name="material_component_lists_right_padding_16dp">16dp</dimen>
+    <dimen name="material_component_lists_left_padding_16dp">16dp</dimen>
+    <dimen name="material_component_lists_left_padding_8dp">8dp</dimen>
+    <dimen name="material_component_lists_right_padding_8dp">8dp</dimen>
+    <dimen name="material_component_lists_left_margin_8dp">8dp</dimen>
+    <dimen name="material_component_lists_right_margin_8dp">8dp</dimen>
+
     <dimen name="material_component_lists_single_line_height">48dp</dimen>
     <dimen name="material_component_lists_padding_above_list">8dp</dimen>
     <dimen name="material_component_lists_single_line_with_avatar_height">56dp</dimen>
@@ -135,16 +156,10 @@
     <!-- Tabs -->
     <!-- Text fields -->
     <dimen name="material_component_text_fields_floating_label_height">72dp</dimen>
-    <dimen name="material_component_text_fields_floating_label_padding_above_label_text">16dp
-    </dimen>
-    <dimen name="material_component_text_fields_floating_label_padding_between_label_and_input_text">
-        8dp
-    </dimen>
-    <dimen name="material_component_text_fields_floating_label_padding_below_input_text_including_divider">
-        8dp
-    </dimen>
-    <dimen name="material_component_text_fields_floating_label_padding_below_text_divider">8dp
-    </dimen>
+    <dimen name="material_component_text_fields_floating_label_padding_above_label_text">16dp</dimen>
+    <dimen name="material_component_text_fields_floating_label_padding_between_label_and_input_text">8dp</dimen>
+    <dimen name="material_component_text_fields_floating_label_padding_below_input_text_including_divider">8dp</dimen>
+    <dimen name="material_component_text_fields_floating_label_padding_below_text_divider">8dp</dimen>
     <dimen name="material_component_text_fields_icon_height">48dp</dimen>
     <dimen name="material_component_text_fields_padding_above_and_below_label">16dp</dimen>
     <dimen name="material_component_text_full_width_single_line_text_field_height">56dp</dimen>

@@ -59,6 +59,7 @@ public enum DeviceUtil {
      * @return
      */
 
+    @SuppressLint("MissingPermission")
     public  String getDeviceIMEI(Activity activity) {
         TelephonyManager manager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
         assert manager != null;

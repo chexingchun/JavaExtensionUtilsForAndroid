@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright  2018  WoNium, Joy, Lokiwife.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="toolbarTitle"
+            type="String" />
+
+        <variable
+            name="isNull"
+            type="String" />
+        <variable
+            name="isEmpty"
+            type="String"/>
+        <variable
+            name="valueOf"
+            type="String"/>
+        <variable
+            name="getStringFromMap"
+            type="String"/>
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/layout_toolbar"
+            bind:title="@{toolbarTitle}" />
+
+
+        <LinearLayout style="@style/LayoutWidthMatchAndHeightWrapStyle.LayoutItemStyle">
+
+            <EditText
+                android:id="@+id/edit_is_null"
+                style="@style/LayoutWidthMatchAndHeightWrapStyle.EditViewStyle"
+                android:hint="@string/hint_is_null" />
+
+            <TextView
+                style="@style/ResultTextViewStyle"
+                android:hint="@string/hint_result"
+                android:text="@{isNull}" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_is_null"
+                style="@style/ButtonStyle" />
+
+        </LinearLayout>
+        <View style="@style/SeparatorStyle" />
+
+        <LinearLayout style="@style/LayoutWidthMatchAndHeightWrapStyle.LayoutItemStyle">
+
+            <EditText
+                android:id="@+id/edit_is_empty"
+                style="@style/LayoutWidthMatchAndHeightWrapStyle.EditViewStyle"
+                android:hint="@string/hint_is_empty" />
+
+            <TextView
+                style="@style/ResultTextViewStyle"
+                android:text="@{isEmpty}" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_is_empty"
+                style="@style/ButtonStyle" />
+
+        </LinearLayout>
+
+        <View style="@style/SeparatorStyle" />
+
+
+        <LinearLayout style="@style/LayoutWidthMatchAndHeightWrapStyle.LayoutItemStyle">
+
+            <EditText
+                android:id="@+id/edit_value_of"
+                style="@style/LayoutWidthMatchAndHeightWrapStyle.EditViewStyle"
+                android:hint="@string/hint_value_of" />
+
+            <TextView
+                style="@style/ResultTextViewStyle"
+                android:text="@{valueOf}" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_value_of"
+                style="@style/ButtonStyle" />
+
+        </LinearLayout>
+
+        <View style="@style/SeparatorStyle" />
+
+
+        <LinearLayout style="@style/LayoutWidthMatchAndHeightWrapStyle.LayoutItemStyle">
+
+
+
+            <TextView
+                style="@style/ResultTextViewStyle"
+                android:hint="@string/hint_click_bottom_button_check"
+                android:text="@{getStringFromMap}" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_get_string_from_map"
+                style="@style/ButtonStyle" />
+
+        </LinearLayout>
+
+        <View style="@style/SeparatorStyle" />
+        <TextView
+            android:id="@+id/tv_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</layout>
+
