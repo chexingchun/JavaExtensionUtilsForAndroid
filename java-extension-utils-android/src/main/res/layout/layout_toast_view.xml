@@ -13,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/horizontal_dimen_14dp"
         android:layout_marginRight="@dimen/horizontal_dimen_14dp"
-        android:background="@color/gainsboro"/>
+        android:background="@color/gainsOro"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
