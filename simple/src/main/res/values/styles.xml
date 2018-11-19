@@ -24,8 +24,7 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:text">@string/btn_confirm</item>
         <item name="android:textColor">@color/snow</item>
-        <item name="android:layout_marginBottom">@dimen/material_layout_view_bottom_margin_8dp
-        </item>
+        <item name="android:layout_marginBottom">@dimen/material_layout_view_bottom_margin_8dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/text_size_16sp</item>
     </style>

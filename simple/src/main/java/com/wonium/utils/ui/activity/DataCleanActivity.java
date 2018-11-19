@@ -15,6 +15,14 @@
  */
 
 package com.wonium.utils.ui.activity;
+
+import android.databinding.DataBindingUtil;
+
+import com.wonium.example.R;
+import com.wonium.example.databinding.ActivityDataCleanBinding;
+import com.wonium.extension.utils.DataCleanUtil;
+import com.wonium.extension.utils.StringUtil;
+
 /**
  * @ClassName: AcacheActivity.java
  * @Description: 类描述
@@ -27,19 +35,30 @@ package com.wonium.utils.ui.activity;
  * @UpdateDescription: 更新说明
  * @Version: 1.0.0
  */
-public class AcacheActivity extends BaseActivity {
+public class DataCleanActivity extends BaseActivity {
+    private ActivityDataCleanBinding binding;
+
     @Override
     public void initView(int layoutResID) {
-
+        binding = DataBindingUtil.setContentView(this, layoutResID);
+        setSupportActionBar(binding.includeLayoutAcacheToolbar.toolbar);
+        binding.setTitle(getString(R.string.item_data_clean));
     }
 
     @Override
     public void initListener() {
-
+        binding.btnGetAcache.setOnClickListener(v -> {
+            try {
+                binding.tvAcacheResult.setText(StringUtil.INSTANCE.isEmpty(DataCleanUtil.INSTANCE.getTotalCacheSize(this)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        binding.btnCleanAcache.setOnClickListener(v -> binding.tvAcacheResult.setText(StringUtil.INSTANCE.isEmpty(DataCleanUtil.INSTANCE.clearAllCache(this) + "KB")));
     }
 
     @Override
     public int getLayoutResId() {
-        return 0;
+        return R.layout.activity_data_clean;
     }
 }

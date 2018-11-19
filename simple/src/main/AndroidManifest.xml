@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.wonium.utils.ui.activity.AcacheActivity"/>
+        <activity android:name="com.wonium.utils.ui.activity.DataCleanActivity"/>
         <activity android:name="com.wonium.utils.ui.activity.StringActivity"/>
     </application>
 

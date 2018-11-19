@@ -21,10 +21,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.wonium.example.R;
 import com.wonium.extension.utils.IntentUtil;
+import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
 import com.wonium.utils.adapter.BaseAdapter;
 import com.wonium.utils.adapter.MainFunctionAdapter;
@@ -54,18 +57,19 @@ public class MainActivity extends BaseActivity implements MainView {
     private MainPresenter mPresenter;
     private RecyclerView mRecyclerView;
     private MainFunctionAdapter mAdapter;
+
     @Override
     public void initView(int layoutResID) {
         setContentView(layoutResID);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRecyclerView =findViewById(R.id.recyclerView);
-        mAdapter =new MainFunctionAdapter(this);
-        LinearLayoutManager manager =new LinearLayoutManager(this);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mAdapter = new MainFunctionAdapter(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter =new MainPresenterImpl(this);
+        mPresenter = new MainPresenterImpl(this);
 
         permissionHelper = new PermissionHelper(this);
         mPresenter.getListData(this);
@@ -74,15 +78,17 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void initListener() {
-        mAdapter.setOnItemClickListener((view,position) -> {
-            switch (position){
+        mAdapter.setOnItemClickListener((view, position) -> {
+            ToastUtil.INSTANCE.show(this, StringUtil.INSTANCE.valueOf(position));
+            switch (position) {
                 case 0:
-                    IntentUtil.INSTANCE.toActivity(this,AcacheActivity.class);
                     break;
                 case 1:
                 case 2:
                 case 3:
                 case 4:
+                    IntentUtil.INSTANCE.toActivity(this, DataCleanActivity.class);
+                    break;
                 case 5:
                 case 6:
                 case 7:
@@ -95,11 +101,13 @@ public class MainActivity extends BaseActivity implements MainView {
                 case 14:
                 case 15:
                 case 16:
-                case 17:
-                    IntentUtil.INSTANCE.toActivity(this,StringActivity.class);
+                    IntentUtil.INSTANCE.toActivity(this, StringActivity.class);
                     break;
-                    default:
-                        break;
+                case 17:
+
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -115,7 +123,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     private void onSuccess() {
 
-//        mTvSSID.setText(DeviceUtil.INSTANCE.getWIFISSID(this));
+        //        mTvSSID.setText(DeviceUtil.INSTANCE.getWIFISSID(this));
     }
 
     private void onDenied() {
@@ -135,4 +143,5 @@ public class MainActivity extends BaseActivity implements MainView {
     public void updateListData(List<String> datas) {
         mAdapter.setDatas(datas);
     }
+
 }

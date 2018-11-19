@@ -16,7 +16,7 @@
 
 <resources>
     <string-array name="function_list">
-        <item>@string/item_acache</item>
+
         <item>@string/item_activity_manager</item>
         <item>@string/item_bitmap</item>
         <item>@string/item_byte</item>
