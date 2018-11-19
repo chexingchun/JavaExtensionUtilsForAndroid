@@ -29,7 +29,18 @@ import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
 
 import ru.alexbykov.nopermission.PermissionHelper;
-
+/**
+ * @ClassName: DeviceActivity.java
+ * @Description: 设备信息Activity
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/19 23:31
+ * @UpdateUser: update user
+ * @UpdateDate: 2018/11/19 23:31
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
+ */
 public class DeviceActivity extends BaseActivity {
     private ActivityDeviceBinding mBinding;
     private PermissionHelper mPermissionHelper;
@@ -54,13 +65,22 @@ public class DeviceActivity extends BaseActivity {
     }
     private void onSuccess(){
         StringBuilder builder =new StringBuilder();
-        builder.append("phone number:")
+        builder.append("当前软件版本-->")
+                .append(DeviceUtil.INSTANCE.getVersionName(this))
+                .append("\n软件版本号-->").append(StringUtil.INSTANCE.valueOf(DeviceUtil.INSTANCE.getVersionCode(this)))
+                .append("\nphone number-->")
                 .append(StringUtil.INSTANCE.isEmpty(DeviceUtil.INSTANCE.getPhoneNumber(getContext())))
-                .append("\nmac addr:")
+                .append("\nIMEI-->")
+                .append(DeviceUtil.INSTANCE.getDeviceIMEI(this))
+                .append("\nmac addr-->")
                 .append(DeviceUtil.INSTANCE.getMacAddress(this))
-                .append("\nbrand:")
-                .append(StringUtil.INSTANCE.isEmpty(DeviceUtil.INSTANCE.getPhoneBrand()))
-                .append("\ntime:").append(DateUtil.INSTANCE.getDateTimeFromMillis(System.currentTimeMillis()));
+                .append("\nbrand-->")
+                .append(StringUtil.INSTANCE.isEmpty(DeviceUtil.INSTANCE.getBrand()))
+                .append("\n手机型号-->")
+                .append(DeviceUtil.INSTANCE.getModel())
+                .append("\nAndroid_ID-->")
+                .append(DeviceUtil.INSTANCE.getAndroidId(this))
+                .append("\nWIFI SSID-->").append(DeviceUtil.INSTANCE.getWIFISSID(this));
         mBinding.tvDeviceResult.setText(builder);
     }
     private void onDenied(){

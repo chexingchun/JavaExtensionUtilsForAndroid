@@ -27,6 +27,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.RequiresPermission;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -87,9 +88,6 @@ public enum DeviceUtil {
         return 1;
     }
 
-
-
-
     /**
      *获取版本名
      * @param context
@@ -105,8 +103,6 @@ public enum DeviceUtil {
         }
         return "1.0";
     }
-
-
     /**
      * 获取MacAddr
      *
@@ -148,7 +144,6 @@ public enum DeviceUtil {
         InetAddress ip = null;
         try {
             // 列举
-
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
             // 是否还有元素
             while (networkInterfaces.hasMoreElements()) {
@@ -169,12 +164,10 @@ public enum DeviceUtil {
                 }
             }
         } catch (SocketException e) {
-
             e.printStackTrace();
         }
         return ip;
     }
-
     /**
      * 获取SSID
      * @param activity 上下文
@@ -208,22 +201,41 @@ public enum DeviceUtil {
         }
         return ssid;
     }
-
     /**
      * 获取手机号
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 手机号
      */
     @SuppressLint ({"MissingPermission", "HardwareIds"})
     public String getPhoneNumber(Context context){
         TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        assert manager != null;
         return  manager.getLine1Number();
     }
 
-    public String getPhoneBrand(){
+    /**
+     * 获取手机品牌
+     * @return Build.BRAND
+     */
+    public String getBrand(){
         return  Build.BRAND;
     }
 
+    /**
+     * 获取手机型号
+     * @return Build.MODEL
+     */
+    public String getModel(){
+        return Build.MODEL;
+    }
+
+    /**
+     * 获取手机唯一的id
+     * @return Settings.Secure.Android_ID
+     */
+    public String getAndroidId(Context context){
+        return  Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ANDROID_ID);
+    }
 
 }
 
