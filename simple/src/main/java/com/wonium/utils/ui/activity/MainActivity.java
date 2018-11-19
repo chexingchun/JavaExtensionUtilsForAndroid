@@ -92,6 +92,8 @@ public class MainActivity extends BaseActivity implements MainView {
                 case 5:
                 case 6:
                 case 7:
+                    IntentUtil.INSTANCE.toActivity(this,DeviceActivity.class);
+                    break;
                 case 8:
                 case 9:
                 case 10:

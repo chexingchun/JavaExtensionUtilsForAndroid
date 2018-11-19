@@ -44,22 +44,22 @@ public enum DateUtil {
     /**
      * yyyy-MM-dd HH:mm:ss字符串
      */
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public  final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * yyyy-MM-dd字符串
      */
-    public static final String DEFAULT_FORMAT_DATE = "yyyy-MM-dd";
+    public  final String DEFAULT_FORMAT_DATE = "yyyy-MM-dd";
 
     /**
      * HH:mm:ss字符串
      */
-    public static final String DEFAULT_FORMAT_TIME = "HH:mm:ss";
+    public  final String DEFAULT_FORMAT_TIME = "HH:mm:ss";
 
     /**
      * yyyy-MM-dd HH:mm:ss格式
      */
-    public static final ThreadLocal<SimpleDateFormat> defaultDateTimeFormat = new ThreadLocal<SimpleDateFormat>() {
+    public  final ThreadLocal<SimpleDateFormat> defaultDateTimeFormat = new ThreadLocal<SimpleDateFormat>() {
 
         @Override
         protected SimpleDateFormat initialValue() {
@@ -71,7 +71,7 @@ public enum DateUtil {
     /**
      * yyyy-MM-dd格式
      */
-    public static final ThreadLocal<SimpleDateFormat> defaultDateFormat = new ThreadLocal<SimpleDateFormat>() {
+    public  final ThreadLocal<SimpleDateFormat> defaultDateFormat = new ThreadLocal<SimpleDateFormat>() {
 
         @Override
         protected SimpleDateFormat initialValue() {
@@ -83,7 +83,7 @@ public enum DateUtil {
     /**
      * HH:mm:ss格式
      */
-    public static final ThreadLocal<SimpleDateFormat> defaultTimeFormat = new ThreadLocal<SimpleDateFormat>() {
+    public  final ThreadLocal<SimpleDateFormat> defaultTimeFormat = new ThreadLocal<SimpleDateFormat>() {
 
         @Override
         protected SimpleDateFormat initialValue() {
@@ -99,7 +99,7 @@ public enum DateUtil {
      * @param timeInMillis 时间long值
      * @return yyyy-MM-dd HH:mm:ss
      */
-    public static String getDateTimeFromMillis(long timeInMillis) {
+    public  String getDateTimeFromMillis(long timeInMillis) {
         return getDateTimeFormat(new Date(timeInMillis));
     }
 
@@ -109,7 +109,7 @@ public enum DateUtil {
      * @param timeInMillis 毫秒时间
      * @return yyyy-MM-dd
      */
-    public static String getDateFromMillis(long timeInMillis) {
+    public  String getDateFromMillis(long timeInMillis) {
         return getDateFormat(new Date(timeInMillis));
     }
 
@@ -120,7 +120,7 @@ public enum DateUtil {
      * @param date Date对象
      * @return yyyy-MM-dd HH:mm:ss
      */
-    public static String getDateTimeFormat(Date date) {
+    public  String getDateTimeFormat(Date date) {
         return dateSimpleFormat(date, defaultDateTimeFormat.get());
     }
 
@@ -133,7 +133,7 @@ public enum DateUtil {
      *              注：月表示Calendar的月，比实际小1
      *              对输入项未做判断
      */
-    public static String getDateFormat(int year, int month, int day) {
+    public  String getDateFormat(int year, int month, int day) {
         return getDateFormat(getDate(year, month, day));
     }
 
@@ -143,7 +143,7 @@ public enum DateUtil {
      * @param date Date对象
      * @return yyyy-MM-dd
      */
-    public static String getDateFormat(Date date) {
+    public  String getDateFormat(Date date) {
         return dateSimpleFormat(date, defaultDateFormat.get());
     }
 
@@ -153,7 +153,7 @@ public enum DateUtil {
      * @param date
      * @return
      */
-    public static String getTimeFormat(Date date) {
+    public  String getTimeFormat(Date date) {
         return dateSimpleFormat(date, defaultTimeFormat.get());
     }
 
@@ -164,7 +164,7 @@ public enum DateUtil {
      * @param format 格式化后日期格式
      * @return 格式化后的日期显示
      */
-    public static String dateFormat(String sdate, String format) {
+    public  String dateFormat(String sdate, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.CHINA);
         java.sql.Date date = java.sql.Date.valueOf(sdate);
         return dateSimpleFormat(date, formatter);
@@ -177,7 +177,7 @@ public enum DateUtil {
      * @param format 格式化后日期格式
      * @return 格式化后的日期显示
      */
-    public static String dateFormat(Date date, String format) {
+    public  String dateFormat(Date date, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.CHINA);
         return dateSimpleFormat(date, formatter);
     }
@@ -191,7 +191,7 @@ public enum DateUtil {
      *               注： SimpleDateFormat为空时，采用默认的yyyy-MM-dd HH:mm:ss格式
      * @return yyyy-MM-dd HH:mm:ss
      */
-    public static String dateSimpleFormat(Date date, SimpleDateFormat format) {
+    public  String dateSimpleFormat(Date date, SimpleDateFormat format) {
         if (format == null)
             format = defaultDateTimeFormat.get();
         assert format != null;
@@ -204,7 +204,7 @@ public enum DateUtil {
      * @param strDate 时间字符串
      * @return Date
      */
-    public static Date getDateByDateTimeFormat(String strDate) {
+    public  Date getDateByDateTimeFormat(String strDate) {
         return getDateByFormat(strDate, defaultDateTimeFormat.get());
     }
 
@@ -214,7 +214,7 @@ public enum DateUtil {
      * @param strDate
      * @return Date
      */
-    public static Date getDateByDateFormat(String strDate) {
+    public  Date getDateByDateFormat(String strDate) {
         return getDateByFormat(strDate, defaultDateFormat.get());
     }
 
@@ -225,7 +225,7 @@ public enum DateUtil {
      * @param format  格式化字符串
      * @return Date
      */
-    public static Date getDateByFormat(String strDate, String format) {
+    public  Date getDateByFormat(String strDate, String format) {
         return getDateByFormat(strDate, new SimpleDateFormat(format, Locale.CHINA));
     }
 
@@ -237,7 +237,7 @@ public enum DateUtil {
      * @param format  SimpleDateFormat对象
      * @throws ParseException 日期格式转换出错
      */
-    private static Date getDateByFormat(String strDate, SimpleDateFormat format) {
+    private  Date getDateByFormat(String strDate, SimpleDateFormat format) {
         if (format == null)
             format = defaultDateTimeFormat.get();
         try {
@@ -257,7 +257,7 @@ public enum DateUtil {
      * @param day   日
      *              注：月表示Calendar的月，比实际小1
      */
-    public static Date getDate(int year, int month, int day) {
+    public  Date getDate(int year, int month, int day) {
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.set(year, month - 1, day);
         return mCalendar.getTime();
@@ -270,7 +270,7 @@ public enum DateUtil {
      * @param end   终止日期，格式yyyy-MM-dd
      * @return 两个日期相差天数
      */
-    public static long getIntervalDays(String strat, String end) {
+    public  long getIntervalDays(String strat, String end) {
         return ((java.sql.Date.valueOf(end)).getTime() - (java.sql.Date.valueOf(strat)).getTime()) / (3600 * 24 * 1000);
     }
 
@@ -279,7 +279,7 @@ public enum DateUtil {
      *
      * @return year(int)
      */
-    public static int getCurrentYear() {
+    public  int getCurrentYear() {
         Calendar mCalendar = Calendar.getInstance();
         return mCalendar.get(Calendar.YEAR);
     }
@@ -289,7 +289,7 @@ public enum DateUtil {
      *
      * @return month(int) 1-12
      */
-    public static int getCurrentMonth() {
+    public  int getCurrentMonth() {
         Calendar mCalendar = Calendar.getInstance();
         return mCalendar.get(Calendar.MONTH) + 1;
     }
@@ -299,7 +299,7 @@ public enum DateUtil {
      *
      * @return day(int)
      */
-    public static int getDayOfMonth() {
+    public  int getDayOfMonth() {
         Calendar mCalendar = Calendar.getInstance();
         return mCalendar.get(Calendar.DAY_OF_MONTH);
     }
@@ -309,7 +309,7 @@ public enum DateUtil {
      *
      * @return yyyy-MM-dd
      */
-    public static String getToday() {
+    public  String getToday() {
         Calendar mCalendar = Calendar.getInstance();
         return getDateFormat(mCalendar.getTime());
     }
@@ -319,7 +319,7 @@ public enum DateUtil {
      *
      * @return yyyy-MM-dd
      */
-    public static String getYesterday() {
+    public  String getYesterday() {
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.add(Calendar.DATE, -1);
         return getDateFormat(mCalendar.getTime());
@@ -330,7 +330,7 @@ public enum DateUtil {
      *
      * @return yyyy-MM-dd
      */
-    public static String getBeforeYesterday() {
+    public  String getBeforeYesterday() {
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.add(Calendar.DATE, -2);
         return getDateFormat(mCalendar.getTime());
@@ -342,7 +342,7 @@ public enum DateUtil {
      * @param diff 差值：正的往后推，负的往前推
      * @return
      */
-    public static String getOtherDay(int diff) {
+    public  String getOtherDay(int diff) {
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.add(Calendar.DATE, diff);
         return getDateFormat(mCalendar.getTime());
@@ -355,7 +355,7 @@ public enum DateUtil {
      * @param amount 需要添加的天数，如果是向前的天数，使用负数就可以.
      * @return Date 加上一定天数以后的Date对象.
      */
-    public static String getCalcDateFormat(String sDate, int amount) {
+    public  String getCalcDateFormat(String sDate, int amount) {
         Date date = getCalcDate(getDateByDateFormat(sDate), amount);
         return getDateFormat(date);
     }
@@ -367,7 +367,7 @@ public enum DateUtil {
      * @param amount 需要添加的天数，如果是向前的天数，使用负数就可以.
      * @return Date 加上一定天数以后的Date对象.
      */
-    public static Date getCalcDate(Date date, int amount) {
+    public  Date getCalcDate(Date date, int amount) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, amount);
@@ -383,7 +383,7 @@ public enum DateUtil {
      * @param sOffset 秒偏移量，可为负
      * @return
      */
-    public static Date getCalcTime(Date date, int hOffset, int mOffset, int sOffset) {
+    public  Date getCalcTime(Date date, int hOffset, int mOffset, int sOffset) {
         Calendar cal = Calendar.getInstance();
         if (date != null)
             cal.setTime(date);
@@ -404,13 +404,13 @@ public enum DateUtil {
      * @param second    秒 0-59
      * @return 一个Date对象
      */
-    public static Date getDate(int year, int month, int date, int hourOfDay, int minute, int second) {
+    public  Date getDate(int year, int month, int date, int hourOfDay, int minute, int second) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, date, hourOfDay, minute, second);
         return cal.getTime();
     }
 
-    public static String[] convertTimeDifference(String timeDifference) {
+    public  String[] convertTimeDifference(String timeDifference) {
         return timeDifference.split(":");
     }
 
@@ -420,7 +420,7 @@ public enum DateUtil {
      * @param sDate yyyy-MM-dd格式
      * @return arr[0]:年， arr[1]:月 0-11 , arr[2]日
      */
-    public static int[] getYearMonthAndDayFrom(String sDate) {
+    public  int[] getYearMonthAndDayFrom(String sDate) {
         return getYearMonthAndDayFromDate(getDateByDateFormat(sDate));
     }
 
@@ -429,7 +429,7 @@ public enum DateUtil {
      *
      * @return arr[0]:年， arr[1]:月 0-11 , arr[2]日
      */
-    public static int[] getYearMonthAndDayFromDate(Date date) {
+    public  int[] getYearMonthAndDayFromDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int[] arr = new int[3];

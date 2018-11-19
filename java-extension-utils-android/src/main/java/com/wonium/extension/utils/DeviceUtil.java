@@ -27,12 +27,17 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.support.annotation.RequiresPermission;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * @ClassName: DeviceUtil.java
@@ -71,7 +76,7 @@ public enum DeviceUtil {
      * @param context
      * @return
      */
-    public static int getVersionCode(Context context) {
+    public  int getVersionCode(Context context) {
         PackageManager manager = context.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -90,7 +95,7 @@ public enum DeviceUtil {
      * @param context
      * @return 版本名称
      */
-    public static String getVersionName(Context context){
+    public  String getVersionName(Context context){
         PackageManager manager =context.getPackageManager();
         try {
             PackageInfo info =manager.getPackageInfo(context.getPackageName(),0);
@@ -203,5 +208,22 @@ public enum DeviceUtil {
         }
         return ssid;
     }
+
+    /**
+     * 获取手机号
+     * @param context
+     * @return
+     */
+    @SuppressLint ({"MissingPermission", "HardwareIds"})
+    public String getPhoneNumber(Context context){
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return  manager.getLine1Number();
+    }
+
+    public String getPhoneBrand(){
+        return  Build.BRAND;
+    }
+
+
 }
 
