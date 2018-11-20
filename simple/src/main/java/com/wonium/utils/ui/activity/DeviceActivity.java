@@ -19,14 +19,23 @@ package com.wonium.utils.ui.activity;
 
 import android.Manifest;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityDeviceBinding;
+import com.wonium.extension.utils.ByteUtil;
 import com.wonium.extension.utils.DateUtil;
 import com.wonium.extension.utils.DeviceUtil;
+import com.wonium.extension.utils.FileUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import ru.alexbykov.nopermission.PermissionHelper;
 /**
@@ -44,20 +53,21 @@ import ru.alexbykov.nopermission.PermissionHelper;
 public class DeviceActivity extends BaseActivity {
     private ActivityDeviceBinding mBinding;
     private PermissionHelper mPermissionHelper;
+
     @Override
     public void initView(int layoutResID) {
         mBinding = DataBindingUtil.setContentView(this, layoutResID);
         setSupportActionBar(mBinding.includeLayoutDeviceToolbar.toolbar);
         mBinding.setTitle(getResources().getString(R.string.item_device));
-        mPermissionHelper =new PermissionHelper(this);
+        mPermissionHelper = new PermissionHelper(this);
     }
 
     @Override
     public void initListener() {
-        mBinding.btnDeviceInfo.setOnClickListener(v->getDeviceInfo());
+        mBinding.btnDeviceInfo.setOnClickListener(v -> getDeviceInfo());
     }
 
-    private  void getDeviceInfo(){
+    private void getDeviceInfo() {
 
         mPermissionHelper.check(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_SMS,Manifest.permission.READ_PHONE_NUMBERS)
                 .onSuccess(this::onSuccess).onDenied(this::onDenied).onNeverAskAgain(this::onNeverAskAgain).run();
@@ -99,6 +109,6 @@ public class DeviceActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mPermissionHelper.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        mPermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
