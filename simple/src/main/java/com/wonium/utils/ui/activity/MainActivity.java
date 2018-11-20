@@ -16,20 +16,14 @@
 
 package com.wonium.utils.ui.activity;
 
-import android.Manifest;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 
 import com.wonium.example.R;
 import com.wonium.extension.utils.IntentUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
-import com.wonium.utils.adapter.BaseAdapter;
 import com.wonium.utils.adapter.MainFunctionAdapter;
 import com.wonium.utils.presenter.MainPresenter;
 import com.wonium.utils.presenter.impl.MainPresenterImpl;
@@ -37,7 +31,6 @@ import com.wonium.utils.ui.view.MainView;
 
 import java.util.List;
 
-import ru.alexbykov.nopermission.PermissionHelper;
 
 /**
  * @ClassName: MainActivity.java
@@ -52,10 +45,7 @@ import ru.alexbykov.nopermission.PermissionHelper;
  * @Version: 1.0.0
  */
 public class MainActivity extends BaseActivity implements MainView {
-    private PermissionHelper permissionHelper;
 
-    private MainPresenter mPresenter;
-    private RecyclerView mRecyclerView;
     private MainFunctionAdapter mAdapter;
 
     @Override
@@ -63,17 +53,14 @@ public class MainActivity extends BaseActivity implements MainView {
         setContentView(layoutResID);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRecyclerView = findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         mAdapter = new MainFunctionAdapter(this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter = new MainPresenterImpl(this);
-
-        permissionHelper = new PermissionHelper(this);
+        MainPresenter mPresenter = new MainPresenterImpl(this);
         mPresenter.getListData(this);
-        getWifiSSid();
     }
 
     @Override
@@ -82,6 +69,7 @@ public class MainActivity extends BaseActivity implements MainView {
             ToastUtil.INSTANCE.show(this, StringUtil.INSTANCE.valueOf(position));
             switch (position) {
                 case 0:
+                    IntentUtil.INSTANCE.toActivity(this, ActivityManagerActivity.class);
                     break;
                 case 1:
                 case 2:
@@ -92,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainView {
                 case 5:
                 case 6:
                 case 7:
-                    IntentUtil.INSTANCE.toActivity(this,DeviceActivity.class);
+                    IntentUtil.INSTANCE.toActivity(this, DeviceActivity.class);
                     break;
                 case 8:
                 case 9:
@@ -119,27 +107,6 @@ public class MainActivity extends BaseActivity implements MainView {
         return R.layout.activity_main;
     }
 
-    private void getWifiSSid() {
-        permissionHelper.check(Manifest.permission.ACCESS_FINE_LOCATION).onSuccess(this::onSuccess).onDenied(this::onDenied).onNeverAskAgain(this::onNeverAskAgain).run();
-    }
-
-    private void onSuccess() {
-
-        //        mTvSSID.setText(DeviceUtil.INSTANCE.getWIFISSID(this));
-    }
-
-    private void onDenied() {
-        ToastUtil.INSTANCE.show(this, "权限被拒绝，9.0系统无法获取SSID");
-    }
-
-    private void onNeverAskAgain() {
-        ToastUtil.INSTANCE.show(this, "权限被拒绝，9.0系统无法获取SSID,下次不会在询问了");
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
     @Override
     public void updateListData(List<String> datas) {
