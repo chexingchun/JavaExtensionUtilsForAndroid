@@ -137,7 +137,7 @@ public enum DeviceUtil {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        return macAddress;
+        return macAddress.toLowerCase();
     }
 
     private InetAddress getLocalInetAddress() {

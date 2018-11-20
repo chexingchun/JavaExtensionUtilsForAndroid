@@ -29,6 +29,7 @@ import com.wonium.utils.presenter.MainPresenter;
 import com.wonium.utils.presenter.impl.MainPresenterImpl;
 import com.wonium.utils.ui.view.MainView;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -84,6 +85,8 @@ public class MainActivity extends BaseActivity implements MainView {
                     break;
                 case 8:
                 case 9:
+                    IntentUtil.INSTANCE.toActivity(this,FileActivity.class);
+                    break;
                 case 10:
                 case 11:
                 case 12:
