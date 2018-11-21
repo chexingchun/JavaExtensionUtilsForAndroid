@@ -19,23 +19,13 @@ package com.wonium.utils.ui.activity;
 
 import android.Manifest;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityDeviceBinding;
-import com.wonium.extension.utils.ByteUtil;
-import com.wonium.extension.utils.DateUtil;
 import com.wonium.extension.utils.DeviceUtil;
-import com.wonium.extension.utils.FileUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
-
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import ru.alexbykov.nopermission.PermissionHelper;
 /**
@@ -64,6 +54,8 @@ public class DeviceActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        mBinding.includeLayoutDeviceToolbar.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        mBinding.includeLayoutDeviceToolbar.toolbar.setNavigationOnClickListener(v -> finish());
         mBinding.btnDeviceInfo.setOnClickListener(v -> getDeviceInfo());
     }
 

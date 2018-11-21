@@ -49,6 +49,8 @@ public class ActivityManagerActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        mBinding.includeToolbarActivityManager.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        mBinding.includeToolbarActivityManager.toolbar.setNavigationOnClickListener(v -> finish());
         // 添加当前Actvity
         mBinding.btnAddActivity.setOnClickListener(v -> {
             ActivityManagerUtil.getInstance().addActivity(this);
