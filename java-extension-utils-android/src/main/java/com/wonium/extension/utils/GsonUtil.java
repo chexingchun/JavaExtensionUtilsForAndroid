@@ -40,89 +40,60 @@ public enum GsonUtil {
      * 实例对象
      */
     INSTANCE;
-        private static Gson gson = null;
-        static {
-            if (gson == null) {
-                gson = new Gson();
-            }
-        }
 
-        private GsonUtil() {
-        }
+    /**
+     * 转成json
+     *
+     * @param object
+     * @return
+     */
+    public String GsonString(Object object) {
+        return new Gson().toJson(object);
+    }
 
-        /**
-         * 转成json
-         *
-         * @param object
-         * @return
-         */
-        public String GsonString(Object object) {
-            String gsonString = null;
-            if (gson != null) {
-                gsonString = gson.toJson(object);
-            }
-            return gsonString;
-        }
+    /**
+     * 转成bean
+     *
+     * @param gsonString
+     * @param cls
+     * @return
+     */
+    public <T> T GsonToBean(String gsonString, Class<T> cls) {
 
-        /**
-         * 转成bean
-         *
-         * @param gsonString
-         * @param cls
-         * @return
-         */
-        public  <T> T GsonToBean(String gsonString, Class<T> cls) {
-            T t = null;
-            if (gson != null) {
-                t = gson.fromJson(gsonString, cls);
-            }
-            return t;
-        }
+        return new Gson().fromJson(gsonString, cls);
+    }
 
-        /**
-         * 转成list
-         *
-         * @param gsonString
-         * @param cls
-         * @return
-         */
-        public  <T> List<T> GsonToList(String gsonString, Class<T> cls) {
-            List<T> list = null;
-            if (gson != null) {
-                list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
-                }.getType());
-            }
-            return list;
-        }
+    /**
+     * 转成list
+     *
+     * @param gsonString
+     * @return
+     */
+    public <T> List<T> GsonToList(String gsonString) {
 
-        /**
-         * 转成list中有map的
-         *
-         * @param gsonString
-         * @return
-         */
-        public  <T> List<Map<String, T>> GsonToListMaps(String gsonString) {
-            List<Map<String, T>> list = null;
-            if (gson != null) {
-                list = gson.fromJson(gsonString,
-                        new TypeToken<List<Map<String, T>>>() {
-                        }.getType());
-            }
-            return list;
-        }
+        return new Gson().fromJson(gsonString, new TypeToken<List<T>>() {}.getType());
+    }
 
-        /**
-         * 转成map的
-         *
-         * @param gsonString
-         * @return
-         */
-        public  <T> Map<String, T> GsonToMaps(String gsonString) {
-            Map<String, T> map = null;
-            if (gson != null) {
-                map = gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
-                }.getType());
-            }
-            return map;
-        }
+    /**
+     * 转成list中有map的
+     *
+     * @param gsonString
+     * @return
+     */
+    public <T> List<Map<String, T>> GsonToListMaps(String gsonString) {
+
+        return new Gson().fromJson(gsonString, new TypeToken<List<Map<String, T>>>() {}.getType());
+    }
+
+    /**
+     * 转成map的
+     *
+     * @param gsonString
+     * @return
+     */
+    public <T> Map<String, T> GsonToMaps(String gsonString) {
+
+        return new Gson().fromJson(gsonString, new TypeToken<Map<String, T>>() {}.getType());
+
+    }
 }

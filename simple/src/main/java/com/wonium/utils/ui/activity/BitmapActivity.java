@@ -20,9 +20,11 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.orhanobut.logger.Logger;
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityBitmapBinding;
 import com.wonium.extension.utils.BitmapUtil;
+import com.wonium.extension.utils.ByteUtil;
 import com.wonium.extension.utils.ToastUtil;
 
 /**
@@ -46,14 +48,21 @@ public class BitmapActivity extends BaseActivity {
         mBinding = DataBindingUtil.setContentView(this, layoutResID);
         setSupportActionBar(mBinding.includeToolbarBitmap.toolbar);
         mBinding.includeToolbarBitmap.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        mBinding.setTitle(getResources().getString(R.string.item_bitmap));
         mBinding.includeToolbarBitmap.toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
     public void initListener() {
+        // 创建一个bitmap
         mBinding.btnCreateBitmap.setOnClickListener(v -> createBitmap());
+        // img 转bitmap
         mBinding.btnImgToBitmap.setOnClickListener(v -> imgToBitmap());
+        // 获取Bitmap的大小
         mBinding.btnBitmapSize.setOnClickListener(v -> getBitmapSize());
+        // Bitmap To Bytes
+        mBinding.btnBitmapToBytes.setOnClickListener(v -> bitmapToBytes());
+        mBinding.btnGetBitmapByPath.setOnClickListener(v ->getBitmapFromPath() );
     }
 
     /**
@@ -73,6 +82,19 @@ public class BitmapActivity extends BaseActivity {
         mBinding.imgToBitmap.setImageBitmap(bitmap);
         mBinding.tvBitmapSize.setText(new StringBuilder().append("蜗牛图片转换成Bitmap的Size:\n").append(BitmapUtil.INSTANCE.getBitmapSize(bitmap)));
     }
+
+    private void bitmapToBytes(){
+        ToastUtil.INSTANCE.show(getContext(),"查看Log");
+        Bitmap bitmap =BitmapUtil.INSTANCE.imgToBitmap(getContext(),R.drawable.img_wonium);
+        Logger.d(ByteUtil.INSTANCE.printHexBinary(BitmapUtil.INSTANCE.bitmapToByte(bitmap)));
+    }
+
+    private void getBitmapFromPath(){
+        String path="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542904680889&di=f436ad37f1dd8cacdac4c4ea138f685d&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D8987b62f0055b31988f48a362bc0e853%2Feac4b74543a98226e9b8d1098082b9014a90eba7.jpg";
+        new Thread(() -> BitmapUtil.INSTANCE.getBitmapByPath(path)).start();
+        mBinding.imgDisplayBitmapFormPath.setImageBitmap();
+    }
+
 
     @Override
     public int getLayoutResId() {

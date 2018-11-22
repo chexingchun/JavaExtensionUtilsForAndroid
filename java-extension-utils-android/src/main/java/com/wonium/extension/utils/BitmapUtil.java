@@ -141,32 +141,6 @@ public enum BitmapUtil {
     }
 
 
-    /**
-     * 保存图片
-     *
-     * @param bitmap 图片
-     * @param name   索引 文件名
-     * @return 文件path
-     */
-
-    public  String saveBitmap(Bitmap bitmap, String name) {
-        File file = new File(Environment.getExternalStorageDirectory() + TypeCommon.ZH_PROGRAM_COVER);
-        if (!file.exists())
-            file.mkdirs();
-        File imgFile = new File(file.getAbsolutePath() + "/" + name + TypeCommon.ZH_FILE_BMP_UFFIX);
-        if (imgFile.exists())
-            imgFile.delete();
-        try {
-            FileOutputStream outputStream = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return imgFile.getPath();
-    }
-
 
     /**
      * 通过Path 获得Bitmap
@@ -220,7 +194,6 @@ public enum BitmapUtil {
         return Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), matrix, true);
     }
 
-
     /**
      * Bitmap 旋转，
      *
@@ -238,130 +211,14 @@ public enum BitmapUtil {
     }
 
 
-    /**
-     * 将Bitmap存为 .bmp格式图片
-     *
-     * @param bitmap 原图片
-     */
-    public void saveBmp(Bitmap bitmap, String path) {
-        if (bitmap == null) {
-            return;
-        }
-        byte bmpData[];
-        int nBmpWidth = bitmap.getWidth();
-        int nBmpHeight = bitmap.getHeight();
-        // 图像数据大小
-        int bufferSize = nBmpHeight * nBmpWidth * 4;
-        try {
-            File file = new File(path);
-            File fileParent = file.getParentFile();
-            if (!fileParent.exists()) {
-                fileParent.mkdirs();
-            }
-            if (file.exists()) {
-                file.delete();
-            }
-            FileOutputStream fileos = new FileOutputStream(path);
-            // bmp文件头
-            int bfType = 0x4d42;
-            long bfSize = 14 + 40 + bufferSize;
-            int bfReserved1 = 0;
-            int bfReserved2 = 0;
-            long bfOffBits = 14 + 40;
-            // 保存bmp文件头
-            writeWord(fileos, bfType);
-            writeDword(fileos, bfSize);
-            writeWord(fileos, bfReserved1);
-            writeWord(fileos, bfReserved2);
-            writeDword(fileos, bfOffBits);
-            // bmp信息头
-            long biSize = 40L;
-            int biPlanes = 1;
-            int biBitCount = 32;
-            long biCompression = 0L;
-            long biSizeImage = 0L;
-            long biXpelsPerMeter = 0L;
-            long biYPelsPerMeter = 0L;
-            long biClrUsed = 0L;
-            long biClrImportant = 0L;
-            // 保存bmp信息头
-            writeDword(fileos, biSize);
-            writeLong(fileos, (long) nBmpWidth);
-            writeLong(fileos, (long) nBmpHeight);
-            writeWord(fileos, biPlanes);
-            writeWord(fileos, biBitCount);
-            writeDword(fileos, biCompression);
-            writeDword(fileos, biSizeImage);
-            writeLong(fileos, biXpelsPerMeter);
-            writeLong(fileos, biYPelsPerMeter);
-            writeDword(fileos, biClrUsed);
-            writeDword(fileos, biClrImportant);
-            // 像素扫描
-            bmpData = new byte[bufferSize];
-            int wWidth = (nBmpWidth * 4);
-            for (int nCol = 0, nRealCol = nBmpHeight - 1; nCol < nBmpHeight; ++nCol, --nRealCol) {
-                for (int wRow = 0, wByteIdex = 0; wRow < nBmpWidth; wRow++, wByteIdex += 4) {
-                    int clr = bitmap.getPixel(wRow, nCol);
-                    bmpData[nRealCol * wWidth + wByteIdex] = (byte) Color.blue(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 1] = (byte) Color.green(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 2] = (byte) Color.red(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 3] = (byte) Color.alpha(0x00);
-                }
-            }
-            fileos.write(bmpData);
-            fileos.flush();
-            fileos.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取BMP 文件的RGB 数据
-     *
-     * @param srcBitmap 原Bitmap
-     * @return bitmap的RGB数据
-     */
-    public  byte[] getBmpRGBData(Bitmap srcBitmap) {
-        int nBmpWidth = srcBitmap.getWidth();
-        int nBmpHeight = srcBitmap.getHeight();
-        int bufferSize = nBmpHeight * nBmpWidth * 4;
-        byte[] bmpData = new byte[bufferSize];
-        int wWidth = (nBmpWidth * 4);
-        int sumIndex;
-        int clr;
-        for (int nCol = 0, nRealCol = nBmpHeight - 1; nCol < nBmpHeight; ++nCol, --nRealCol) {
-            for (int wRow = 0, wByteIndex = 0; wRow < nBmpWidth; wRow++, wByteIndex += 4) {
-                clr = srcBitmap.getPixel(wRow, nCol);
-                sumIndex = nRealCol * wWidth + wByteIndex;
-                bmpData[sumIndex] = (byte) Color.blue(clr);
-                bmpData[sumIndex + 1] = (byte) Color.green(clr);
-                bmpData[sumIndex + 2] = (byte) Color.red(clr);
-                bmpData[sumIndex + 3] = (byte) Color.alpha(0x00);//透明度必须为0
-            }
-        }
-        return bmpData;
-    }
-
+	/**
+	  *获取RGB数据，从左上角开始取
+	  */
     public  byte[] getPixelsBGRA(Bitmap image) {
         int bytes = image.getByteCount();
-
-        ByteBuffer buffer = ByteBuffer.allocate(bytes); // Create a new buffer
-        image.copyPixelsToBuffer(buffer); // Move the byte data to the buffer
-        byte[] temp = buffer.array(); // Get the underlying array containing the data.
-        byte[] pixels = new byte[temp.length]; // Allocate for BGRA
-
-        for (int i = 0; i < (temp.length / 4); i++) {
-            pixels[i * 4] = temp[i * 4 + 2];     // B
-            pixels[i * 4 + 1] = temp[i * 4 + 1]; // G
-            pixels[i * 4 + 2] = temp[i * 4];     // R
-            pixels[i * 4 + 3] = 0x00; // A
-            //          pixels[i * 4 + 3] = temp[i*4+3]; // A
-        }
-        return pixels;
+        ByteBuffer buffer = ByteBuffer.allocate(bytes); 
+        image.copyPixelsToBuffer(buffer); 
+        return buffer.array();
     }
 
     /**
@@ -370,7 +227,7 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmap
      * @return bitmap的RGB数据
      */
-    public  byte[] getBmpRGBData24(Bitmap srcBitmap) {
+    public  byte[] getRGBDataFormat24(Bitmap srcBitmap) {
         int bmpWidth = srcBitmap.getWidth();
         int bmpHeight = srcBitmap.getHeight();
         int bufferSize = bmpHeight * bmpWidth * 3;
@@ -385,32 +242,6 @@ public enum BitmapUtil {
             }
         }
         return bmpData;
-    }
-
-
-    private  void writeWord(FileOutputStream stream, int value) throws IOException {
-        byte[] b = new byte[2];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        stream.write(b);
-    }
-
-    private  void writeDword(FileOutputStream stream, long value) throws IOException {
-        byte[] b = new byte[4];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        b[2] = (byte) (value >> 16 & 0xff);
-        b[3] = (byte) (value >> 24 & 0xff);
-        stream.write(b);
-    }
-
-    private  void writeLong(FileOutputStream stream, long value) throws IOException {
-        byte[] b = new byte[4];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        b[2] = (byte) (value >> 16 & 0xff);
-        b[3] = (byte) (value >> 24 & 0xff);
-        stream.write(b);
     }
 
     /**
@@ -477,19 +308,5 @@ public enum BitmapUtil {
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(orgBitmap, 0, 0, (int) width, (int) height, matrix, true);
-    }
-
-
-    /**
-     * 保存图片交由异步线程处理
-     *
-     * @param bitmap 图片
-     * @param path   图片路径
-     */
-    private void asynSaveBitmap(Bitmap bitmap, String path) {
-
-        if (IS_SAVE_BITMAP) {
-            ThreadPoolUtil.INSTANCE.execute(() -> BitmapUtil.INSTANCE.saveBmp(bitmap, path));
-        }
     }
 }

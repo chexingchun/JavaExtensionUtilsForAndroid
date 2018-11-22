@@ -75,5 +75,29 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_create_bitmap" />
 
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_bitmap_to_bytes"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_top_margin_8dp"
+            android:text="bitmapToBytes"
+            app:layout_constraintTop_toBottomOf="@+id/btn_bitmap_size" />
+
+        <ImageView
+            android:id="@+id/img_display_bitmap_form_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/btn_bitmap_to_bytes" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_get_bitmap_by_path"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="根据路径获取Bitmap"
+            android:layout_marginTop="@dimen/material_layout_view_top_margin_8dp"
+            app:layout_constraintTop_toBottomOf="@+id/img_display_bitmap_form_path" />
+
+
     </android.support.constraint.ConstraintLayout>
 </layout>
