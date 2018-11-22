@@ -60,8 +60,14 @@ public enum BitmapUtil {
 
     public static final boolean IS_SAVE_BITMAP = false;
 
-
-    public static Bitmap createBitmap(int width, int height, int color) {
+    /**
+     * 创建一个指定宽，高，颜色的bitmap
+     * @param width bitmap的宽，单位是像素
+     * @param height bitmap的高，单位是像素
+     * @param color bitmap 的颜色 例如getResources().getColor(R.color.colorAccent),Color.RED，Color.parseColor("#FFOOFO")等
+     * @return
+     */
+    public  Bitmap createBitmap(int width, int height, int color) {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setStrokeWidth(10);
@@ -79,12 +85,11 @@ public enum BitmapUtil {
      *
      * @param context 上下文
      * @param resId   资源图片ID
-     * @return
+     * @return 资源图片转成的Bitmap
      * @throws NullPointerException
      */
-    public static Bitmap imgToBitmap(Context context, int resId) throws NullPointerException {
-        Resources resources = context.getResources();
-        return BitmapFactory.decodeResource(resources, resId);
+    public  Bitmap imgToBitmap(Context context, int resId) throws NullPointerException {
+        return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
     /**
@@ -93,7 +98,7 @@ public enum BitmapUtil {
      * @param bitmap 被计算的bitmap
      * @return bitmap 的长度
      */
-    public static int getBitmapSize(Bitmap bitmap) {
+    public  int getBitmapSize(Bitmap bitmap) {
         int length = 0;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -108,7 +113,7 @@ public enum BitmapUtil {
      * @return
      */
 
-    public static byte[] bitmapToByte(Bitmap bitmap) {
+    public  byte[] bitmapToByte(Bitmap bitmap) {
         if (bitmap == null) {
             return new byte[0];
         }
@@ -124,7 +129,7 @@ public enum BitmapUtil {
      * @return byte[] bitmap 转换后的字节数组
      */
 
-    public static byte[] convertBitmapToByte(Bitmap bitmap) {
+    public  byte[] convertBitmapToByte(Bitmap bitmap) {
         byte[] datas = bitmapToByte(bitmap);
         int[] intDatas = ByteUtil.INSTANCE.bytesToInts(datas);
         byte[] result = new byte[0];
@@ -144,7 +149,7 @@ public enum BitmapUtil {
      * @return 文件path
      */
 
-    public static String saveBitmap(Bitmap bitmap, String name) {
+    public  String saveBitmap(Bitmap bitmap, String name) {
         File file = new File(Environment.getExternalStorageDirectory() + TypeCommon.ZH_PROGRAM_COVER);
         if (!file.exists())
             file.mkdirs();
@@ -169,7 +174,7 @@ public enum BitmapUtil {
      * @param urlPath 文件路径
      * @return bitmap
      */
-    public static Bitmap getBitmapByPath(String urlPath) {
+    public  Bitmap getBitmapByPath(String urlPath) {
         Bitmap bitmap = null;
         try {
             URL url = new URL(urlPath);
@@ -196,7 +201,7 @@ public enum BitmapUtil {
      * @param height 新的高
      * @return Bitmap
      */
-    public static Bitmap imgToBitmap(String path, int width, int height) {
+    public  Bitmap imgToBitmap(String path, int width, int height) {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         bitmap = BitmapUtil.INSTANCE.getZoomImage(bitmap, width, height);
         return bitmap;
@@ -208,7 +213,7 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmapf
      * @return new bitmap
      */
-    public static Bitmap flippingBitmap(Bitmap srcBitmap) {
+    public  Bitmap flippingBitmap(Bitmap srcBitmap) {
         Matrix matrix = new Matrix();
         matrix.postScale(1, -1);
         matrix.postRotate(0);
@@ -225,7 +230,7 @@ public enum BitmapUtil {
      * @param sy
      * @return
      */
-    public static Bitmap rotateBitmap(Bitmap bitmap, float angle, float sx, float sy) {
+    public  Bitmap rotateBitmap(Bitmap bitmap, float angle, float sx, float sy) {
         Matrix matrix = new Matrix();
         matrix.postScale(sx, sy);
         matrix.postRotate(angle);
@@ -320,7 +325,7 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmap
      * @return bitmap的RGB数据
      */
-    public static byte[] getBmpRGBData(Bitmap srcBitmap) {
+    public  byte[] getBmpRGBData(Bitmap srcBitmap) {
         int nBmpWidth = srcBitmap.getWidth();
         int nBmpHeight = srcBitmap.getHeight();
         int bufferSize = nBmpHeight * nBmpWidth * 4;
@@ -341,7 +346,7 @@ public enum BitmapUtil {
         return bmpData;
     }
 
-    public static byte[] getPixelsBGRA(Bitmap image) {
+    public  byte[] getPixelsBGRA(Bitmap image) {
         int bytes = image.getByteCount();
 
         ByteBuffer buffer = ByteBuffer.allocate(bytes); // Create a new buffer
@@ -365,7 +370,7 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmap
      * @return bitmap的RGB数据
      */
-    public static byte[] getBmpRGBData24(Bitmap srcBitmap) {
+    public  byte[] getBmpRGBData24(Bitmap srcBitmap) {
         int bmpWidth = srcBitmap.getWidth();
         int bmpHeight = srcBitmap.getHeight();
         int bufferSize = bmpHeight * bmpWidth * 3;
@@ -383,14 +388,14 @@ public enum BitmapUtil {
     }
 
 
-    private static void writeWord(FileOutputStream stream, int value) throws IOException {
+    private  void writeWord(FileOutputStream stream, int value) throws IOException {
         byte[] b = new byte[2];
         b[0] = (byte) (value & 0xff);
         b[1] = (byte) (value >> 8 & 0xff);
         stream.write(b);
     }
 
-    private static void writeDword(FileOutputStream stream, long value) throws IOException {
+    private  void writeDword(FileOutputStream stream, long value) throws IOException {
         byte[] b = new byte[4];
         b[0] = (byte) (value & 0xff);
         b[1] = (byte) (value >> 8 & 0xff);
@@ -399,7 +404,7 @@ public enum BitmapUtil {
         stream.write(b);
     }
 
-    private static void writeLong(FileOutputStream stream, long value) throws IOException {
+    private  void writeLong(FileOutputStream stream, long value) throws IOException {
         byte[] b = new byte[4];
         b[0] = (byte) (value & 0xff);
         b[1] = (byte) (value >> 8 & 0xff);
@@ -414,7 +419,7 @@ public enum BitmapUtil {
      * @param bmp 位图
      * @return 返回转换好的位图
      */
-    public static Bitmap convertToBlackWhite(Bitmap bmp) {
+    public  Bitmap convertToBlackWhite(Bitmap bmp) {
         int width = bmp.getWidth(); // 获取位图的宽
         int height = bmp.getHeight(); // 获取位图的高
         int[] pixels = new int[width * height]; // 通过位图的大小创建像素点数组
