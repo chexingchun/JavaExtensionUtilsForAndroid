@@ -20,6 +20,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityBitmapBinding;
@@ -62,37 +63,42 @@ public class BitmapActivity extends BaseActivity {
         mBinding.btnBitmapSize.setOnClickListener(v -> getBitmapSize());
         // Bitmap To Bytes
         mBinding.btnBitmapToBytes.setOnClickListener(v -> bitmapToBytes());
-        mBinding.btnGetBitmapByPath.setOnClickListener(v ->getBitmapFromPath() );
+        mBinding.btnGetBitmapByPath.setOnClickListener(v -> getBitmapFromPath());
     }
 
     /**
      * 创建一个Bitmap
      */
-    private  void createBitmap(){
+    private void createBitmap() {
         // 显示创建的Bitmap
-        mBinding.imgShowCreateBitmap.setImageBitmap(BitmapUtil.INSTANCE.createBitmap(192,192,getResources().getColor(R.color.darkSalmon)));
-    }
-    private void imgToBitmap(){
-        ToastUtil.INSTANCE.show(getContext(),"imgToBitmap");
-        mBinding.imgToBitmap.setImageBitmap(BitmapUtil.INSTANCE.imgToBitmap(getContext(),R.drawable.img_wonium));
+        mBinding.imgShowCreateBitmap.setImageBitmap(BitmapUtil.INSTANCE.createBitmap(192, 192, getResources().getColor(R.color.darkSalmon)));
     }
 
-    private void getBitmapSize(){
-        Bitmap bitmap =BitmapUtil.INSTANCE.imgToBitmap(getContext(),R.drawable.img_wonium);
+    private void imgToBitmap() {
+        ToastUtil.INSTANCE.show(getContext(), "imgToBitmap");
+        mBinding.imgToBitmap.setImageBitmap(BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium));
+    }
+
+    private void getBitmapSize() {
+        Bitmap bitmap = BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium);
         mBinding.imgToBitmap.setImageBitmap(bitmap);
         mBinding.tvBitmapSize.setText(new StringBuilder().append("蜗牛图片转换成Bitmap的Size:\n").append(BitmapUtil.INSTANCE.getBitmapSize(bitmap)));
     }
 
-    private void bitmapToBytes(){
-        ToastUtil.INSTANCE.show(getContext(),"查看Log");
-        Bitmap bitmap =BitmapUtil.INSTANCE.imgToBitmap(getContext(),R.drawable.img_wonium);
+    private void bitmapToBytes() {
+        ToastUtil.INSTANCE.show(getContext(), "查看Log");
+        Bitmap bitmap = BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium);
         Logger.d(ByteUtil.INSTANCE.printHexBinary(BitmapUtil.INSTANCE.bitmapToByte(bitmap)));
     }
 
-    private void getBitmapFromPath(){
-        String path="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542904680889&di=f436ad37f1dd8cacdac4c4ea138f685d&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D8987b62f0055b31988f48a362bc0e853%2Feac4b74543a98226e9b8d1098082b9014a90eba7.jpg";
-        new Thread(() -> BitmapUtil.INSTANCE.getBitmapByPath(path)).start();
-        mBinding.imgDisplayBitmapFormPath.setImageBitmap();
+    private void getBitmapFromPath() {
+        String path = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542904680889&di=f436ad37f1dd8cacdac4c4ea138f685d&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D8987b62f0055b31988f48a362bc0e853%2Feac4b74543a98226e9b8d1098082b9014a90eba7.jpg";
+       new Thread(() -> {
+           Bitmap bitmap =BitmapUtil.INSTANCE.getBitmapByPath(path);
+           if (bitmap!=null){
+               runOnUiThread(() -> mBinding.imgDisplayBitmapFormPath.setImageBitmap(bitmap));
+           }
+       }).start();
     }
 
 
