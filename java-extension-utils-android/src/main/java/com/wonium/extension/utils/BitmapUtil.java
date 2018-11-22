@@ -58,7 +58,6 @@ public enum BitmapUtil {
      */
     INSTANCE;
 
-    public static final boolean IS_SAVE_BITMAP = false;
 
     /**
      * 创建一个指定宽，高，颜色的bitmap
@@ -122,24 +121,6 @@ public enum BitmapUtil {
         return baos.toByteArray();
     }
 
-    /**
-     * Bitmap 转成字节数组
-     *
-     * @param bitmap 源Bitmap
-     * @return byte[] bitmap 转换后的字节数组
-     */
-
-    public  byte[] convertBitmapToByte(Bitmap bitmap) {
-        byte[] datas = bitmapToByte(bitmap);
-        int[] intDatas = ByteUtil.INSTANCE.bytesToInts(datas);
-        byte[] result = new byte[0];
-        for (int i = 0; i < intDatas.length; i++) {
-            intDatas[i] = intDatas[i] & 0x00FFFFFF;
-            result = ByteUtil.INSTANCE.appendData(result, ByteUtil.INSTANCE.intToBytes(intDatas[i]));
-        }
-        return result;
-    }
-
 
 
     /**
@@ -167,19 +148,6 @@ public enum BitmapUtil {
         return bitmap;
     }
 
-    /**
-     * 图片转换 Bitmap,并设置新的宽，高
-     *
-     * @param path   图片路径
-     * @param width  新的宽
-     * @param height 新的高
-     * @return Bitmap
-     */
-    public  Bitmap imgToBitmap(String path, int width, int height) {
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        bitmap = BitmapUtil.INSTANCE.getZoomImage(bitmap, width, height);
-        return bitmap;
-    }
 
     /**
      * Bitmap 翻转
@@ -199,13 +167,10 @@ public enum BitmapUtil {
      *
      * @param bitmap 被旋转得Bitmap
      * @param angle
-     * @param sx
-     * @param sy
      * @return
      */
-    public  Bitmap rotateBitmap(Bitmap bitmap, float angle, float sx, float sy) {
+    public  Bitmap rotateBitmap(Bitmap bitmap, float angle) {
         Matrix matrix = new Matrix();
-        matrix.postScale(sx, sy);
         matrix.postRotate(angle);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }

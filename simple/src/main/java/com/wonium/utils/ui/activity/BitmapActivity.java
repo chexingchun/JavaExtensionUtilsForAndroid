@@ -18,6 +18,7 @@ package com.wonium.utils.ui.activity;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
@@ -51,6 +52,11 @@ public class BitmapActivity extends BaseActivity {
         mBinding.includeToolbarBitmap.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         mBinding.setTitle(getResources().getString(R.string.item_bitmap));
         mBinding.includeToolbarBitmap.toolbar.setNavigationOnClickListener(v -> finish());
+        flippingBitmap();
+
+        //图片旋转
+        Bitmap bitmap = BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium);
+        mBinding.imgRotateBitmap.setImageBitmap(BitmapUtil.INSTANCE.rotateBitmap(bitmap,-90));
     }
 
     @Override
@@ -64,6 +70,8 @@ public class BitmapActivity extends BaseActivity {
         // Bitmap To Bytes
         mBinding.btnBitmapToBytes.setOnClickListener(v -> bitmapToBytes());
         mBinding.btnGetBitmapByPath.setOnClickListener(v -> getBitmapFromPath());
+
+
     }
 
     /**
@@ -100,6 +108,16 @@ public class BitmapActivity extends BaseActivity {
                 runOnUiThread(() -> mBinding.imgDisplayBitmapFormPath.setImageBitmap(bitmap));
             }
         });
+    }
+
+    /**
+     * 图片反转
+     */
+    private void flippingBitmap(){
+        Bitmap bitmap = BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium);
+      mBinding.btnFlippingBitmap.setOnClickListener(v -> {
+          mBinding.imgFlippingBitmap.setImageBitmap(BitmapUtil.INSTANCE.flippingBitmap(bitmap));
+      });
     }
 
 

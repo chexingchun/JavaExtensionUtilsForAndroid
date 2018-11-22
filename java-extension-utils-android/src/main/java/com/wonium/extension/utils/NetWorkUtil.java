@@ -93,9 +93,7 @@ public enum  NetWorkUtil {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                return true;
-            }
+            return networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
         }
         return false;
     }
