@@ -45,6 +45,7 @@ public enum VerifyUtil {
      * @return 以字母开头，长度在6-18之间，只能包含字符、数字和下划线
      */
     public static boolean checkPasswrd(String password) {
+
         return Pattern.matches("^[a-zA-Z]\\w{5,19}$", password);
     }
 
