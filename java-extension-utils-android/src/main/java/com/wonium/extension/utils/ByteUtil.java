@@ -283,22 +283,7 @@ public enum  ByteUtil {
         return r.toString();
     }
 
-    /**
-     * 生成新的byte 数组
-     *
-     * @param total 总数据
-     * @param data  需要被加进来的数据
-     * @return result 新的byte数组集合
-     */
-    //    public static byte[] appendData(byte[] total, byte[] data) {
-    //        if (total==null){
-    //            total =new byte[0];
-    //        }
-    //        byte[] result = new byte[total.length + data.length];
-    //        System.arraycopy(total, 0, result, 0, total.length);
-    //        System.arraycopy(data, 0, result, total.length, data.length);
-    //        return result;
-    //    }
+
     public byte[] appendData(byte[] total, byte[] data) {
         if (total == null) {
             total = new byte[0];

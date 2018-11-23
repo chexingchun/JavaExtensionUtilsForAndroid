@@ -17,7 +17,6 @@
 package com.wonium.extension.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -26,14 +25,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.ThumbnailUtils;
-import android.os.Environment;
-
-import com.wonium.extension.config.TypeCommon;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -179,7 +172,7 @@ public enum BitmapUtil {
 	/**
 	  *获取RGB数据，从左上角开始取
 	  */
-    public  byte[] getPixelsBGRA(Bitmap image) {
+    public  byte[] getPixels(Bitmap image) {
         int bytes = image.getByteCount();
         ByteBuffer buffer = ByteBuffer.allocate(bytes); 
         image.copyPixelsToBuffer(buffer); 

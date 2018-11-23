@@ -57,6 +57,14 @@ public class BitmapActivity extends BaseActivity {
         //图片旋转
         Bitmap bitmap = BitmapUtil.INSTANCE.imgToBitmap(getContext(), R.drawable.img_wonium);
         mBinding.imgRotateBitmap.setImageBitmap(BitmapUtil.INSTANCE.rotateBitmap(bitmap,-90));
+        // 打印RGBA数据
+        byte[] bytes=BitmapUtil.INSTANCE.getPixels(bitmap);
+        Logger.d("打印RGBA数据————>: "+ByteUtil.INSTANCE.printHexBinary(bytes));
+        // 打印RGB数据 24位
+         byte[] bytes24=BitmapUtil.INSTANCE.getRGBDataFormat24(bitmap);
+        Logger.d("打印RGB数据24位————>: "+ByteUtil.INSTANCE.printHexBinary(bytes24));
+
+
     }
 
     @Override
