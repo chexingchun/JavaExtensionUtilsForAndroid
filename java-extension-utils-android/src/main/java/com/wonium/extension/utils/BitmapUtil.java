@@ -26,9 +26,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.ThumbnailUtils;
-import android.os.Environment;
-
-import com.wonium.extension.config.TypeCommon;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -136,31 +133,6 @@ public enum BitmapUtil {
     }
 
 
-    /**
-     * 保存图片
-     *
-     * @param bitmap 图片
-     * @param name   索引 文件名
-     * @return 文件path
-     */
-
-    public static String saveBitmap(Bitmap bitmap, String name) {
-        File file = new File(Environment.getExternalStorageDirectory() + TypeCommon.ZH_PROGRAM_COVER);
-        if (!file.exists())
-            file.mkdirs();
-        File imgFile = new File(file.getAbsolutePath() + "/" + name + TypeCommon.ZH_FILE_BMP_UFFIX);
-        if (imgFile.exists())
-            imgFile.delete();
-        try {
-            FileOutputStream outputStream = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return imgFile.getPath();
-    }
 
 
     /**
