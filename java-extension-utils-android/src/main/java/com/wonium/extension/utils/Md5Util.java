@@ -34,7 +34,9 @@ import java.security.NoSuchAlgorithmException;
  * @Version:
  */
 public enum Md5Util {
-
+    /**
+     * 实例对象
+     */
     INSTANCE;
 
     public String stringToMD5(String plainText) {
