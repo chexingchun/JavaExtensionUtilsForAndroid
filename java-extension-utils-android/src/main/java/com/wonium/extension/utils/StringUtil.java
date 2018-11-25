@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  wonium
+ * Copyright  2018  WoNium, Joy, Lokiwife.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,12 @@ public enum StringUtil {
      */
     INSTANCE;
 
+
+
+    public boolean isNull(CharSequence text) {
+        return TextUtils.isEmpty(text);
+    }
+
     public String isEmpty(String text) {
         if (text == null || "".equals(text) || text.length() == 0) {
             return "";
@@ -48,16 +54,18 @@ public enum StringUtil {
         }
     }
 
-    public boolean isNull(CharSequence text) {
-        return TextUtils.isEmpty(text);
-    }
-
-
     public <T> String valueOf(T value) {
         return String.valueOf(value);
     }
 
-    public String getString(Map map, String key, String defaultValue) {
+    /**
+     * 从Map集合中获取给定Key对应的Value
+     * @param map
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public String getStringFromMap(Map map, String key, String defaultValue) {
         Object obj = map.get(key);
         return obj == null ? defaultValue : (obj instanceof Number && Pattern.matches("^[-\\+]?[\\d]*\\.0*$",obj.toString()) ? String.valueOf(Long.valueOf(((Number) obj).longValue())) : obj.toString());
     }
@@ -98,7 +106,7 @@ public enum StringUtil {
      * @return 字符转码成功返回新的字符串，否则返回null
      * @throws UnsupportedEncodingException
      */
-    private  String changeCharSet(String str, String newCharset) throws UnsupportedEncodingException {
+    public String changeCharSet(String str, String newCharset) throws UnsupportedEncodingException {
         if (str != null) {
             // 用默认字符编码解码字符串。
             byte[] bs = str.getBytes();
@@ -108,7 +116,4 @@ public enum StringUtil {
         return null;
     }
 
-    public static void main(String[] args){
-        System.out.print(StringUtil.INSTANCE.reverseString("wonium"));
-    }
 }

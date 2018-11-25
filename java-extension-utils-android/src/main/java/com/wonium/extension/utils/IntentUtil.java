@@ -53,4 +53,15 @@ public enum IntentUtil {
         }
         context.startActivity(intent);
     }
+
+    /**
+     * 跳转到指定的Activity
+     * @param context 上下文
+     * @param cls 指定的activity
+     */
+    public void toActivity(Context context,Class cls){
+        Intent intent =new Intent(context,cls);
+        context.startActivity(intent);
+    }
+
 }

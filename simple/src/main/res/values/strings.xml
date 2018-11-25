@@ -1,4 +1,35 @@
-<resources>
+<resources  >
     <string name="app_name">工具包</string>
     <string name="action_settings">Settings</string>
+    <string name="item_acache">ACacheUtil</string>
+    <string name="item_activity_manager" >ActivityManagerUtils</string>
+    <string name="item_bitmap">BitmapUtil</string>
+    <string name="item_byte">ByteUtil</string>
+    <string name="item_color">ColorUtil</string>
+    <string name="item_data_clean">DataCleanUtil</string>
+    <string name="item_date_util">DateUtil</string>
+    <string name="item_density">DensityUtil</string>
+    <string name="item_device">DeviceUtil</string>
+    <string name="item_file">FileUtils</string>
+    <string name="item_input_method_manager">InputMethodManagerUtil</string>
+    <string name="item_intent">IntentUtil</string>
+    <string name="item_md5">MD5Util</string>
+    <string name="item_network">NetWorkUtil</string>
+    <string name="item_shared_preferences">SharedPreferencesUtil</string>
+    <string name="item_status_bar">StatusBarUtil</string>
+    <string name="item_string">StringUtil</string>
+    <string name="item_thread_pool">ThreadPollUtil</string>
+    <string name="item_toast">ToastUtil</string>
+    <string name="item_verify">VerifyUtil</string>
+
+
+    <!---->
+    <string name="btn_confirm">验证</string>
+    <!--StringUtil-->
+    <string name="hint_is_null">请输入验证isNull方法的字符串</string>
+    <string name="hint_is_empty">请输入验证isEmpty方法的字符串</string>
+    <string name="hint_result">验证结果:</string>
+    <string name="hint_value_of">请输入验证valueOf方法的内容</string>
+    <string name="hint_click_bottom_button_check">点击下方按钮验证</string>
+
 </resources>

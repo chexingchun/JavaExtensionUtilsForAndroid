@@ -40,7 +40,7 @@ public enum  DataCleanUtil {
      */
     INSTANCE;
 
-    public  String getTotalCacheSize(Context context) throws Exception {
+    public  String getTotalCacheSize(Context context) {
         long cacheSize = getFolderSize(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             cacheSize += getFolderSize(context.getExternalCacheDir());
@@ -49,11 +49,12 @@ public enum  DataCleanUtil {
     }
 
 
-    public  void clearAllCache(Context context) {
+    public  String clearAllCache(Context context) {
         deleteDir(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             deleteDir(context.getExternalCacheDir());
         }
+        return "0";
     }
 
     /**
@@ -66,7 +67,7 @@ public enum  DataCleanUtil {
     /**
      * 删除方法 这里只会删除某个文件夹下的文件，如果传入的directory是个文件，将不做处理 * * @param directory
      */
-    private static void deleteFilesByDirectory(File directory) {
+    private  void deleteFilesByDirectory(File directory) {
         if (directory != null && directory.exists() && directory.isDirectory()) {
             for (File item : directory.listFiles()) {
                 item.delete();
@@ -95,7 +96,7 @@ public enum  DataCleanUtil {
       */
 
 
-    public static long getFolderSize(File file) {
+    public  long getFolderSize(File file) {
         long size = 0;
         try {
             File[] fileList = file.listFiles();
@@ -119,7 +120,7 @@ public enum  DataCleanUtil {
      * @param size
      * @return
      */
-    public static String getFormatSize(double size) {
+    private   String getFormatSize(double size) {
         double kiloByte = size / 1024;
         if (kiloByte < 1) {
             return size + "B";

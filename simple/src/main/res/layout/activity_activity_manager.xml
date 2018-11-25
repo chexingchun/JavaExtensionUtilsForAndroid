@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright  2018.  wonium
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_toolbar_activity_manager"
+            layout="@layout/layout_toolbar"
+            bind:title="@{title}" />
+
+        <TextView
+            android:id="@+id/tv_activity_manager_result"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="看源码吧"
+            android:textSize="@dimen/text_size_20sp"
+
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar_activity_manager" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_add_activity"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="添加一个activity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_manager_result" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_remove_current_activity"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="移除当前activity"
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_activity" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_remove_all_activity"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="移除所有activity"
+            app:layout_constraintTop_toBottomOf="@+id/btn_remove_current_activity" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_remove_activity_for_param"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="移除指定的activity"
+            app:layout_constraintTop_toBottomOf="@+id/btn_remove_current_activity" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_remove_activity_by_class_name"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="根据ClassName 移除Activity"
+            app:layout_constraintTop_toBottomOf="@+id/btn_remove_activity_for_param" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_get_current_activity"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="获取当前activity"
+            app:layout_constraintTop_toBottomOf="@+id/btn_remove_activity_by_class_name" />
+
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_show_stack_size"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="显示栈的size"
+            app:layout_constraintTop_toBottomOf="@+id/btn_get_current_activity" />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_app_exit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_layout_view_left_margin_8dp"
+            android:text="退出APP"
+            app:layout_constraintTop_toBottomOf="@+id/btn_show_stack_size" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

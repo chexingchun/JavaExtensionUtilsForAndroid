@@ -31,7 +31,7 @@ import java.util.LinkedList;
  * @CreateDate: 2018/11/11 20:40
  * @UpdateUser: 更新者
  * @UpdateDate: 2018/11/11 20:40
- * @UpdateDescription: 更新说明
+ * @UpdateDescription: 调整Size 方法名
  * @Version: 1.0.0
  */
 public class ActivityManagerUtil {
@@ -90,7 +90,6 @@ public class ActivityManagerUtil {
                 activityStack.remove(activity);
             }
             activity.finish();
-            activity = null;
         }
     }
 
@@ -133,7 +132,11 @@ public class ActivityManagerUtil {
         }
     }
 
-    public int activityStackSize() {
+    /**
+     * activity栈的大小
+     * @return
+     */
+    public int size() {
         return activityStack == null ? 0 : activityStack.size();
     }
 }

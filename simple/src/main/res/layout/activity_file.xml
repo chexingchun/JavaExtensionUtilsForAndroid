@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright  2018.  wonium
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="result"
+            type="String" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_toolbar_file"
+            layout="@layout/layout_toolbar"
+            bind:title="@{title}" />
+
+        <ScrollView
+            android:id="@+id/layout_scroll_view"
+            android:layout_width="wrap_content"
+            bind:layout_constraintTop_toBottomOf="@+id/include_toolbar_file"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_file_result"
+                style="@style/ResultTextViewStyle"
+                android:text="@{title}" />
+
+        </ScrollView>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_read_file"
+            style="@style/ButtonStyle"
+            bind:layout_constraintTop_toBottomOf="@+id/layout_scroll_view" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

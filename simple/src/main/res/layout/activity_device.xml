@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright  2018.  wonium
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_layout_device_toolbar"
+            layout="@layout/layout_toolbar"
+            app:title="@{title}" />
+
+        <TextView
+            android:id="@+id/tv_device_result"
+            style="@style/ResultTextViewStyle"
+            app:layout_constraintTop_toBottomOf="@+id/include_layout_device_toolbar" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_device_info"
+            style="@style/ButtonStyle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_device_result" />
+    </android.support.constraint.ConstraintLayout>
+
+
+</layout>

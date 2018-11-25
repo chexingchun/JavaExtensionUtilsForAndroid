@@ -640,7 +640,7 @@ public class   ACacheUtil {
 
     /**
      * @title 缓存管理器
-     * @author 杨福海（michael） www.yangfuhai.com
+     * @author
      * @version 1.0
      */
     public class ACacheManager {
