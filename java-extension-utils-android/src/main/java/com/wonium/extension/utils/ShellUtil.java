@@ -21,13 +21,18 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+
 /**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2016/08/07
- *     desc  : Shell 相关工具类
- * </pre>
+ * @ClassName: ShellUtil
+ * @Description: Shell 工具类
+ * @Author: Wonium
+ * @E-mail: wonium@qq.com
+ * @Blog: https://blog.wonium.com
+ * @CreateDate: 2018/11/25 21:27
+ * @UpdateUser: update user
+ * @UpdateDate: 2018/11/25 21:27
+ * @UpdateDescription: 更新说明
+ * @Version: 1.0.0
  */
 public enum ShellUtil {
     /**
