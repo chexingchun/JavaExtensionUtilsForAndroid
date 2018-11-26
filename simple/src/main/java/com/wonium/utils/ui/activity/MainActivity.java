@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.wonium.example.R;
+import com.wonium.extension.utils.GsonUtil;
 import com.wonium.extension.utils.IntentUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseActivity implements MainView {
                     IntentUtil.INSTANCE.toActivity(this, ActivityManagerActivity.class);
                     break;
                 case 1:
-                    IntentUtil.INSTANCE.toActivity(this,ExpandListActivity.class);
+                    IntentUtil.INSTANCE.toActivity(this,BitmapActivity.class);
                     break;
                 case 2:
                 case 3:

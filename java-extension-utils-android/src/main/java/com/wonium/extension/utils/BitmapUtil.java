@@ -55,10 +55,15 @@ public enum BitmapUtil {
      */
     INSTANCE;
 
-    public static final boolean IS_SAVE_BITMAP = false;
 
-
-    public static Bitmap createBitmap(int width, int height, int color) {
+    /**
+     * 创建一个指定宽，高，颜色的bitmap
+     * @param width bitmap的宽，单位是像素
+     * @param height bitmap的高，单位是像素
+     * @param color bitmap 的颜色 例如getResources().getColor(R.color.colorAccent),Color.RED，Color.parseColor("#FFOOFO")等
+     * @return
+     */
+    public  Bitmap createBitmap(int width, int height, int color) {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setStrokeWidth(10);
@@ -76,12 +81,11 @@ public enum BitmapUtil {
      *
      * @param context 上下文
      * @param resId   资源图片ID
-     * @return
+     * @return 资源图片转成的Bitmap
      * @throws NullPointerException
      */
-    public static Bitmap imgToBitmap(Context context, int resId) throws NullPointerException {
-        Resources resources = context.getResources();
-        return BitmapFactory.decodeResource(resources, resId);
+    public  Bitmap imgToBitmap(Context context, int resId) throws NullPointerException {
+        return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
     /**
@@ -90,7 +94,7 @@ public enum BitmapUtil {
      * @param bitmap 被计算的bitmap
      * @return bitmap 的长度
      */
-    public static int getBitmapSize(Bitmap bitmap) {
+    public  int getBitmapSize(Bitmap bitmap) {
         int length = 0;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -105,7 +109,7 @@ public enum BitmapUtil {
      * @return
      */
 
-    public static byte[] bitmapToByte(Bitmap bitmap) {
+    public  byte[] bitmapToByte(Bitmap bitmap) {
         if (bitmap == null) {
             return new byte[0];
         }
@@ -113,25 +117,6 @@ public enum BitmapUtil {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
-
-    /**
-     * Bitmap 转成字节数组
-     *
-     * @param bitmap 源Bitmap
-     * @return byte[] bitmap 转换后的字节数组
-     */
-
-    public static byte[] convertBitmapToByte(Bitmap bitmap) {
-        byte[] datas = bitmapToByte(bitmap);
-        int[] intDatas = ByteUtil.INSTANCE.bytesToInts(datas);
-        byte[] result = new byte[0];
-        for (int i = 0; i < intDatas.length; i++) {
-            intDatas[i] = intDatas[i] & 0x00FFFFFF;
-            result = ByteUtil.INSTANCE.appendData(result, ByteUtil.INSTANCE.intToBytes(intDatas[i]));
-        }
-        return result;
-    }
-
 
 
 
@@ -141,7 +126,7 @@ public enum BitmapUtil {
      * @param urlPath 文件路径
      * @return bitmap
      */
-    public static Bitmap getBitmapByPath(String urlPath) {
+    public  Bitmap getBitmapByPath(String urlPath) {
         Bitmap bitmap = null;
         try {
             URL url = new URL(urlPath);
@@ -160,19 +145,6 @@ public enum BitmapUtil {
         return bitmap;
     }
 
-    /**
-     * 图片转换 Bitmap,并设置新的宽，高
-     *
-     * @param path   图片路径
-     * @param width  新的宽
-     * @param height 新的高
-     * @return Bitmap
-     */
-    public static Bitmap imgToBitmap(String path, int width, int height) {
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        bitmap = BitmapUtil.INSTANCE.getZoomImage(bitmap, width, height);
-        return bitmap;
-    }
 
     /**
      * Bitmap 翻转
@@ -180,155 +152,35 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmapf
      * @return new bitmap
      */
-    public static Bitmap flippingBitmap(Bitmap srcBitmap) {
+    public  Bitmap flippingBitmap(Bitmap srcBitmap) {
         Matrix matrix = new Matrix();
         matrix.postScale(1, -1);
         matrix.postRotate(0);
         return Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), matrix, true);
     }
 
-
     /**
      * Bitmap 旋转，
      *
      * @param bitmap 被旋转得Bitmap
      * @param angle
-     * @param sx
-     * @param sy
      * @return
      */
-    public static Bitmap rotateBitmap(Bitmap bitmap, float angle, float sx, float sy) {
+    public  Bitmap rotateBitmap(Bitmap bitmap, float angle) {
         Matrix matrix = new Matrix();
-        matrix.postScale(sx, sy);
         matrix.postRotate(angle);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
 
-    /**
-     * 将Bitmap存为 .bmp格式图片
-     *
-     * @param bitmap 原图片
-     */
-    public void saveBmp(Bitmap bitmap, String path) {
-        if (bitmap == null) {
-            return;
-        }
-        byte bmpData[];
-        int nBmpWidth = bitmap.getWidth();
-        int nBmpHeight = bitmap.getHeight();
-        // 图像数据大小
-        int bufferSize = nBmpHeight * nBmpWidth * 4;
-        try {
-            File file = new File(path);
-            File fileParent = file.getParentFile();
-            if (!fileParent.exists()) {
-                fileParent.mkdirs();
-            }
-            if (file.exists()) {
-                file.delete();
-            }
-            FileOutputStream fileos = new FileOutputStream(path);
-            // bmp文件头
-            int bfType = 0x4d42;
-            long bfSize = 14 + 40 + bufferSize;
-            int bfReserved1 = 0;
-            int bfReserved2 = 0;
-            long bfOffBits = 14 + 40;
-            // 保存bmp文件头
-            writeWord(fileos, bfType);
-            writeDword(fileos, bfSize);
-            writeWord(fileos, bfReserved1);
-            writeWord(fileos, bfReserved2);
-            writeDword(fileos, bfOffBits);
-            // bmp信息头
-            long biSize = 40L;
-            int biPlanes = 1;
-            int biBitCount = 32;
-            long biCompression = 0L;
-            long biSizeImage = 0L;
-            long biXpelsPerMeter = 0L;
-            long biYPelsPerMeter = 0L;
-            long biClrUsed = 0L;
-            long biClrImportant = 0L;
-            // 保存bmp信息头
-            writeDword(fileos, biSize);
-            writeLong(fileos, (long) nBmpWidth);
-            writeLong(fileos, (long) nBmpHeight);
-            writeWord(fileos, biPlanes);
-            writeWord(fileos, biBitCount);
-            writeDword(fileos, biCompression);
-            writeDword(fileos, biSizeImage);
-            writeLong(fileos, biXpelsPerMeter);
-            writeLong(fileos, biYPelsPerMeter);
-            writeDword(fileos, biClrUsed);
-            writeDword(fileos, biClrImportant);
-            // 像素扫描
-            bmpData = new byte[bufferSize];
-            int wWidth = (nBmpWidth * 4);
-            for (int nCol = 0, nRealCol = nBmpHeight - 1; nCol < nBmpHeight; ++nCol, --nRealCol) {
-                for (int wRow = 0, wByteIdex = 0; wRow < nBmpWidth; wRow++, wByteIdex += 4) {
-                    int clr = bitmap.getPixel(wRow, nCol);
-                    bmpData[nRealCol * wWidth + wByteIdex] = (byte) Color.blue(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 1] = (byte) Color.green(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 2] = (byte) Color.red(clr);
-                    bmpData[nRealCol * wWidth + wByteIdex + 3] = (byte) Color.alpha(0x00);
-                }
-            }
-            fileos.write(bmpData);
-            fileos.flush();
-            fileos.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取BMP 文件的RGB 数据
-     *
-     * @param srcBitmap 原Bitmap
-     * @return bitmap的RGB数据
-     */
-    public static byte[] getBmpRGBData(Bitmap srcBitmap) {
-        int nBmpWidth = srcBitmap.getWidth();
-        int nBmpHeight = srcBitmap.getHeight();
-        int bufferSize = nBmpHeight * nBmpWidth * 4;
-        byte[] bmpData = new byte[bufferSize];
-        int wWidth = (nBmpWidth * 4);
-        int sumIndex;
-        int clr;
-        for (int nCol = 0, nRealCol = nBmpHeight - 1; nCol < nBmpHeight; ++nCol, --nRealCol) {
-            for (int wRow = 0, wByteIndex = 0; wRow < nBmpWidth; wRow++, wByteIndex += 4) {
-                clr = srcBitmap.getPixel(wRow, nCol);
-                sumIndex = nRealCol * wWidth + wByteIndex;
-                bmpData[sumIndex] = (byte) Color.blue(clr);
-                bmpData[sumIndex + 1] = (byte) Color.green(clr);
-                bmpData[sumIndex + 2] = (byte) Color.red(clr);
-                bmpData[sumIndex + 3] = (byte) Color.alpha(0x00);//透明度必须为0
-            }
-        }
-        return bmpData;
-    }
-
-    public static byte[] getPixelsBGRA(Bitmap image) {
+	/**
+	  *获取RGB数据，从左上角开始取
+	  */
+    public  byte[] getPixelsBGRA(Bitmap image) {
         int bytes = image.getByteCount();
-
-        ByteBuffer buffer = ByteBuffer.allocate(bytes); // Create a new buffer
-        image.copyPixelsToBuffer(buffer); // Move the byte data to the buffer
-        byte[] temp = buffer.array(); // Get the underlying array containing the data.
-        byte[] pixels = new byte[temp.length]; // Allocate for BGRA
-
-        for (int i = 0; i < (temp.length / 4); i++) {
-            pixels[i * 4] = temp[i * 4 + 2];     // B
-            pixels[i * 4 + 1] = temp[i * 4 + 1]; // G
-            pixels[i * 4 + 2] = temp[i * 4];     // R
-            pixels[i * 4 + 3] = 0x00; // A
-            //          pixels[i * 4 + 3] = temp[i*4+3]; // A
-        }
-        return pixels;
+        ByteBuffer buffer = ByteBuffer.allocate(bytes);
+        image.copyPixelsToBuffer(buffer);
+        return buffer.array();
     }
 
     /**
@@ -337,7 +189,7 @@ public enum BitmapUtil {
      * @param srcBitmap 原Bitmap
      * @return bitmap的RGB数据
      */
-    public static byte[] getBmpRGBData24(Bitmap srcBitmap) {
+    public  byte[] getRGBDataFormat24(Bitmap srcBitmap) {
         int bmpWidth = srcBitmap.getWidth();
         int bmpHeight = srcBitmap.getHeight();
         int bufferSize = bmpHeight * bmpWidth * 3;
@@ -354,39 +206,13 @@ public enum BitmapUtil {
         return bmpData;
     }
 
-
-    private static void writeWord(FileOutputStream stream, int value) throws IOException {
-        byte[] b = new byte[2];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        stream.write(b);
-    }
-
-    private static void writeDword(FileOutputStream stream, long value) throws IOException {
-        byte[] b = new byte[4];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        b[2] = (byte) (value >> 16 & 0xff);
-        b[3] = (byte) (value >> 24 & 0xff);
-        stream.write(b);
-    }
-
-    private static void writeLong(FileOutputStream stream, long value) throws IOException {
-        byte[] b = new byte[4];
-        b[0] = (byte) (value & 0xff);
-        b[1] = (byte) (value >> 8 & 0xff);
-        b[2] = (byte) (value >> 16 & 0xff);
-        b[3] = (byte) (value >> 24 & 0xff);
-        stream.write(b);
-    }
-
     /**
      * 将彩色图转换为黑白图
      *
      * @param bmp 位图
      * @return 返回转换好的位图
      */
-    public static Bitmap convertToBlackWhite(Bitmap bmp) {
+    public  Bitmap convertToBlackWhite(Bitmap bmp) {
         int width = bmp.getWidth(); // 获取位图的宽
         int height = bmp.getHeight(); // 获取位图的高
         int[] pixels = new int[width * height]; // 通过位图的大小创建像素点数组
@@ -444,19 +270,5 @@ public enum BitmapUtil {
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(orgBitmap, 0, 0, (int) width, (int) height, matrix, true);
-    }
-
-
-    /**
-     * 保存图片交由异步线程处理
-     *
-     * @param bitmap 图片
-     * @param path   图片路径
-     */
-    private void asynSaveBitmap(Bitmap bitmap, String path) {
-
-        if (IS_SAVE_BITMAP) {
-            ThreadPoolUtil.INSTANCE.execute(() -> BitmapUtil.INSTANCE.saveBmp(bitmap, path));
-        }
     }
 }
