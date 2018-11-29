@@ -320,6 +320,7 @@ public enum  ByteUtil {
         return ints;
     }
 
+
     /**
      * 将int 转换成byte[] 高字节在后
      *
@@ -335,6 +336,18 @@ public enum  ByteUtil {
         return src;
     }
 
+    /**
+     * short 转字节数组
+     * @param value
+     * @return
+     */
+    public byte[] shortToByteArray(short value){
+        byte[] bytes =new byte[2];
+        bytes[1] = (byte) ((value>>8)&0xFF);
+        bytes[0] = (byte) (value&0xFF);
+        return  bytes;
+    }
+
 
     public int byteArrayToInt(byte[] bArr) {
         if (bArr.length != 4) {
@@ -343,6 +356,19 @@ public enum  ByteUtil {
         return (((bArr[3] & 0xff) << 24) | ((bArr[2] & 0xff) << 16) | ((bArr[1] & 0xff) << 8) | ((bArr[0] & 0xff)));
     }
 
+
+    /**
+     * 字节数组转成short
+     * @param bytes 字节数组
+     * @return 一个short 数据
+     */
+    public  short byteArrayToShort(byte[] bytes){
+        if (bytes.length!=2){
+            return -1;
+        }
+
+        return (short) (((bytes[1] & 0xff) << 8) | ((bytes[0] & 0xff)));
+    }
 
     public String byteArrayToText(byte[] data) {
         StringBuilder sb = new StringBuilder();

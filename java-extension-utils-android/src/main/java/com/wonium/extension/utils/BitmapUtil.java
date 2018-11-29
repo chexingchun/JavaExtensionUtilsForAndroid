@@ -174,8 +174,8 @@ public enum BitmapUtil {
 	  */
     public  byte[] getPixels(Bitmap image) {
         int bytes = image.getByteCount();
-        ByteBuffer buffer = ByteBuffer.allocate(bytes); 
-        image.copyPixelsToBuffer(buffer); 
+        ByteBuffer buffer = ByteBuffer.allocate(bytes);
+        image.copyPixelsToBuffer(buffer);
         return buffer.array();
     }
 

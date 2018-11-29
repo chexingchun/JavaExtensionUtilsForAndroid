@@ -77,6 +77,8 @@ public class MainActivity extends BaseActivity implements MainView {
                     IntentUtil.INSTANCE.toActivity(this,BitmapActivity.class);
                     break;
                 case 2:
+                    IntentUtil.INSTANCE.toActivity(this,ByteActivity.class);
+                    break;
                 case 3:
                 case 4:
                     IntentUtil.INSTANCE.toActivity(this, DataCleanActivity.class);

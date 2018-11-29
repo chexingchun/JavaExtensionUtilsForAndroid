@@ -33,11 +33,7 @@ public class FileActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-        mBinding.btnReadFile.setOnClickListener(v -> {
-
-            mBinding.tvFileResult.setText(FileUtil.INSTANCE.readAssetsFile(this,"Item001.zhd"));
-
-        });
+        mBinding.btnReadFile.setOnClickListener(v -> mBinding.tvFileResult.setText(FileUtil.INSTANCE.readAssetsFile(this,"Item001.zhd")));
     }
 
     @Override
