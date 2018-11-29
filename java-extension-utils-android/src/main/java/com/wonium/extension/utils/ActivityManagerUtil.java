@@ -36,19 +36,19 @@ import java.util.LinkedList;
  */
 public class ActivityManagerUtil {
 
-    private static LinkedList<Activity> activityStack=new LinkedList<>();
+    private static LinkedList<Activity> activityStack = new LinkedList<>();
 
     private static ActivityManagerUtil instance;
 
-    private ActivityManagerUtil() { }
+    private ActivityManagerUtil() {}
 
     /**
      * 单一实例
      */
     public static ActivityManagerUtil getInstance() {
         if (instance == null) {
-            synchronized (ActivityManagerUtil.class){
-                if (instance==null){
+            synchronized (ActivityManagerUtil.class) {
+                if (instance == null) {
                     instance = new ActivityManagerUtil();
                 }
             }
@@ -123,8 +123,7 @@ public class ActivityManagerUtil {
     public void appExit(Context context) {
         try {
             finishAllActivity();
-            ActivityManager activityMgr = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.restartPackage(context.getPackageName());
             System.exit(0);
         } catch (Exception e) {
@@ -134,6 +133,7 @@ public class ActivityManagerUtil {
 
     /**
      * activity栈的大小
+     *
      * @return
      */
     public int size() {

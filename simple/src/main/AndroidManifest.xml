@@ -48,7 +48,7 @@
         <activity android:name="com.wonium.utils.ui.activity.FileActivity"/>
         <activity android:name="com.wonium.utils.ui.activity.ExpandListActivity"/>
         <activity android:name="com.wonium.utils.ui.activity.BitmapActivity"/>
-
+        <activity android:name="com.wonium.utils.ui.activity.ByteActivity"/>
     </application>
 
 </manifest>
