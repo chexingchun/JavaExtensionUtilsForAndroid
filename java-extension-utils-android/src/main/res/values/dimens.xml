@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="horizontal_dimen_14dp">14dp</dimen>
+    <dimen name="horizontal_dimen_3dp">3dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!-- Default colors and dimens per Material Design guidelines (Last update: May 2016 release) -->
     <!-- Style -->
