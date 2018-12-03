@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="horizontal_dimen_14dp">14dp</dimen>
-    <dimen name="horizontal_dimen_3dp">3dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
     <!-- Default colors and dimens per Material Design guidelines (Last update: May 2016 release) -->
     <!-- Style -->
@@ -36,13 +35,14 @@
     <dimen name="material_layout_button_height">36dp</dimen>
     <dimen name="material_layout_separator_height_1px">1px</dimen>
     <dimen name="material_layout_separator_height_1dp">1dp</dimen>
-
     <dimen name="material_layout_view_left_padding_8dp">8dp</dimen>
     <dimen name="material_layout_view_right_padding_8dp">8dp</dimen>
-
     <dimen name="material_layout_view_right_padding_16dp">16dp</dimen>
     <dimen name="material_layout_view_left_padding_16dp">16dp</dimen>
+    <dimen name="material_layout_view_top_bottom_padding_16dp">16dp</dimen>
 
+
+    <!--View 间距-->
     <dimen name="material_layout_view_left_margin_8dp">8dp</dimen>
     <dimen name="material_layout_view_right_margin_8dp">8dp</dimen>
     <dimen name="material_layout_view_bottom_margin_8dp">8dp</dimen>
@@ -50,7 +50,8 @@
 
     <dimen name="material_layout_view_right_margin_16dp">16dp</dimen>
     <dimen name="material_layout_view_left_margin_16dp">16dp</dimen>
-
+    <dimen name="material_layout_view_top_bottom_margin_16dp">16dp</dimen>
+    <dimen name="material_layout_view_left_right_margin_16dp">16dp</dimen>
     <!-- Structure -->
     <dimen name="material_layout_app_bar_height">56dp</dimen>
     <dimen name="material_layout_app_bar_horizontal_padding">16dp</dimen>
@@ -70,8 +71,14 @@
     <dimen name="material_component_bottom_navigation_height">56dp</dimen>
     <!-- Buttons -->
     <dimen name="material_component_button_height">36dp</dimen>
+    <dimen name="material_component_button_height_42dp">42dp</dimen>
+    <dimen name="material_component_button_height_48dp">48dp</dimen>
+    <dimen name="material_component_button_height_56dp">56dp</dimen>
+    <dimen name="material_component_button_min_height_36dp">36dp</dimen>
     <dimen name="material_component_button_dense_height">32dp</dimen>
+
     <dimen name="material_component_button_min_width">88dp</dimen>
+
     <dimen name="material_component_button_touchable_target_height">48dp</dimen>
     <dimen name="material_component_button_corner_radius">2dp</dimen>
     <dimen name="material_component_button_text_left_and_right_padding">16dp</dimen>
