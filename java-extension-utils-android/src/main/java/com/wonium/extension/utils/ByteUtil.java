@@ -16,6 +16,8 @@
 
 package com.wonium.extension.utils;
 
+import com.wonium.extension.Endian;
+
 import java.nio.ByteBuffer;
 
 /**
@@ -43,27 +45,65 @@ public enum  ByteUtil {
      * @return bit位的值 结果范围为0，1  例如 240 获取bit7位置的bit值  返回1
      */
 
-    public byte getBitValueByIndex(byte value, int index) {
-        return  (byte) (0x1&value >> index);
+    public byte getBitValue(byte value, int index ) {
+        return (byte) ((value >> index)&0x1);
+    }
+
+    /**
+     *将一个字节数组转成short,endian判断字节序，如果endian 为Endian.BIG 则为大端在前，如果endian为Endian.LITTLE 则为小端在前
+     * @param bytes 字节数组
+     * @return short 一个short类型的整数
+     */
+    public short byteArrayToShort(byte[] bytes, Endian endian) {
+        int maxLength=2;
+        if(bytes.length!=maxLength){
+            throw new IndexOutOfBoundsException("长度超过最大值");
+        }
+        if (endian==Endian.BIG){
+            return (short) ((bytes[0] << 8) | bytes[1] & 0xFF);
+        }else {
+            return (short) (((bytes[1] & 0xff) << 8) | ((bytes[0] & 0xff)));
+        }
     }
 
 
-    public void putShort(byte[] b, short s, int index) {
-        b[index + 1] = (byte) (s >> 8);
-        b[index] = (byte) (s);
+    /**
+     * short 转字节数组
+     *
+     * @param value short类型的证书
+
+     * @return
+     */
+    public byte[] shortToByteArray(short value,Endian endian) {
+        byte[] bytes = new byte[2];
+        if (endian==Endian.BIG){
+            bytes[0] = (byte) (value >> 8 & 0xFF);
+            bytes[1] = (byte) (value & 0xFF);
+        }else {
+            bytes[0]= (byte) (value & 0xFF);
+            bytes[1]= (byte) (value >> 8 & 0xFF);
+        }
+
+        return bytes;
     }
 
-    public short getShort(byte[] b, int index) {
-        //b[0]在高位,b[1]在低位,即BIG_ENDIAN
-        return (short) ((b[index] << 8) | b[index + 1] & 0xff);
-    }
 
 
-    public void putInt(byte[] bb, int x, int index) {
-        bb[index + 3] = (byte) (x >> 24);
-        bb[index + 2] = (byte) (x >> 16);
-        bb[index + 1] = (byte) (x >> 8);
-        bb[index] = (byte) (x);
+    /**
+     * 字节数组转换成Int 低字节在前，高字节在后
+     * @param bytes
+     * @return
+     */
+    public  int byteArrayToInt(byte[] bytes,Endian endian) {
+        int maxLength =4;
+        if (bytes.length != maxLength) {
+            throw new IndexOutOfBoundsException("the bytes index out of bounds");
+        }
+        if (endian==Endian.BIG){
+            return (((bytes[0] & 0xff) << 24) | ((bytes[1] & 0xff) << 16) | ((bytes[2] & 0xff) << 8) | ((bytes[3] & 0xff)));
+        }else {
+            return (((bytes[3] & 0xff) << 24) | ((bytes[2] & 0xff) << 16) | ((bytes[1] & 0xff) << 8) | ((bytes[0] & 0xff)));
+        }
     }
 
 
@@ -98,27 +138,31 @@ public enum  ByteUtil {
         int temp = (int) ch;
         // byte[] b = new byte[2];
         for (int i = 0; i < 2; i++) {
-            bb[index + i] = Integer.valueOf(temp & 0xff).byteValue(); // 将最高位保存在最低位
-            temp = temp >> 8; // 向右移8位
+            // 将最高位保存在最低位
+            bb[index + i] = Integer.valueOf(temp & 0xff).byteValue();
+            // 向右移8位
+            temp = temp >> 8;
         }
     }
 
     public char getChar(byte[] b, int index) {
         int s = 0;
-        if (b[index + 1] > 0)
+        if (b[index + 1] > 0){
             s += b[index + 1];
-        else
+        } else{
             s += 256 + b[index];
-        s *= 256;
-        if (b[index] > 0)
+            s *= 256;
+        }
+
+        if (b[index] > 0){
             s += b[index + 1];
-        else
+        } else{
             s += 256 + b[index];
-        char ch = (char) s;
-        return ch;
+        }
+        return (char) s;
     }
 
-    public void putFloat(byte[] bb, float x, int index) {
+    public void floatToByteArray(byte[] bb, float x, int index) {
         // byte[] b = new byte[4];
         int l = Float.floatToIntBits(x);
         for (int i = 0; i < 4; i++) {
@@ -127,7 +171,7 @@ public enum  ByteUtil {
         }
     }
 
-    public float getFloat(byte[] b, int index) {
+    public float byteArrayFloat(byte[] b, int index) {
         int l;
         l = b[index];
         l &= 0xff;
@@ -139,7 +183,7 @@ public enum  ByteUtil {
         return Float.intBitsToFloat(l);
     }
 
-    public static void putDouble(byte[] bb, double x, int index) {
+    public static void doubleToByteArray(byte[] bb, double x, int index) {
         // byte[] b = new byte[8];
         long l = Double.doubleToLongBits(x);
         for (int i = 0; i < 4; i++) {
@@ -148,7 +192,7 @@ public enum  ByteUtil {
         }
     }
 
-    public double getDouble(byte[] b, int index) {
+    public double byteArrayToDouble(byte[] b, int index) {
         long l;
         l = b[0];
         l &= 0xff;
@@ -182,46 +226,7 @@ public enum  ByteUtil {
     }
 
 
-    /**
-     * 节目属性组合一个byte
-     *
-     * @param isClose   是否关闭 0 不关闭，1 关闭
-     * @param isLocking 是否锁定 0不锁定，1锁定
-     * @param howPlay   如何播放 0正常播放，1使用定时播放， 2手动播放，3传感器触发播放， 4立即播放
-     * @param playModel 1按次播放，2按时间长度播放， 3按天播放节目，4按周播放
-     * @return byte 组合结果
-     */
-    public byte getProgramAttr(byte isClose, byte isLocking, byte howPlay, byte playModel) {
-        byte result = 0;
-        result = putBitValue(result, isClose, 0);
-        result = putBitValue(result, isLocking, 1);
-        result = putBitValue(result, howPlay, 2);
-        result = putBitValue(result, playModel, 5);
-        return result;
-    }
 
-    /**
-     * 边框和背景数在同一个byte 中表示，bit0-bit3表示边框数，0不使用；bit4-bit7 表示背景个数，0不使用
-     *
-     * @param borderCount 边框数
-     * @param bgCount     背景数
-     * @return byte
-     */
-
-    public byte getProgramBorderAndBgCount(byte borderCount, byte bgCount) {
-        byte result = 0;
-        result = putBitValue(result, borderCount, 0);
-        result = putBitValue(result, bgCount, 4);
-        return result;
-    }
-
-    public int useOneHalfStorage(int value1, int value2) {
-        int result = 0;
-        result = putBitValueInt(result, value1, 0);
-        result = putBitValueInt(result, value2, 16);
-        return result;
-
-    }
 
     public int putBitValueInt(int result, int value, int offset) {
         value <<= offset;
@@ -265,10 +270,30 @@ public enum  ByteUtil {
         return "" + (byte) ((b >> 7) & 0x1) + (byte) ((b >> 6) & 0x1) + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1) + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1) + (byte) ((b >> 1) & 0x1) + (byte) (b & 0x1);
     }
 
+    /**
+     * 二进制打印字节数组
+     * @param bytes 字节数组
+     * @return builder 二进制数据字符串
+     */
+    public String printByteArrayToBinary(byte[] bytes){
+        StringBuilder builder =new StringBuilder();
+        if (bytes==null){
+            throw new NullPointerException("bytes is null");
+        }
 
-    private final char[] hexCode = "0123456789ABCDEF".toCharArray();
+        for (byte b:bytes){
+            builder.append(byteToBit(b));
+        }
+        return builder.toString();
+    }
 
+    /**
+     * 十六进制打印字节数组，每打印16个字节换行
+     * @param data 需打印的字节数组
+     * @return String 转换成16进制后的字符串
+     */
     public String printHexBinary(byte[] data) {
+        char[] hexCode = "0123456789ABCDEF".toCharArray();
         StringBuilder r = new StringBuilder(data.length * 2);
         for (int i = 0; i < data.length; i++) {
             byte b = data[i];
@@ -283,8 +308,13 @@ public enum  ByteUtil {
         return r.toString();
     }
 
-
-    public byte[] appendData(byte[] total, byte[] data) {
+    /**
+     * 字节数组追加操作
+     * @param total 被追加的字节数组
+     * @param data  追加的字节数组
+     * @return byte[] 追加后的字节数组
+     */
+    public byte[] append(byte[] total, byte[] data) {
         if (total == null) {
             total = new byte[0];
         }
@@ -295,39 +325,39 @@ public enum  ByteUtil {
         return buffer.array();
     }
 
+//
+//    /**
+//     * byte[] 转int[]
+//     *
+//     * @param bytes
+//     * @return
+//     */
+//
+//    public int[] bytesToInts(byte[] bytes) {
+//        int bytesLength = bytes.length;
+//        int[] ints = new int[bytesLength % 4 == 0 ? bytesLength / 4 : bytesLength / 4 + 1];
+//        int lengthFlag = 4;
+//        while (lengthFlag <= bytesLength) {
+//            ints[lengthFlag / 4 - 1] = (bytes[lengthFlag - 4] << 24) | (bytes[lengthFlag - 3] & 0xff) << 16 | (bytes[lengthFlag - 2] & 0xff) << 8 | (bytes[lengthFlag - 1] & 0xff);
+//            lengthFlag += 4;
+//        }
+//        for (int i = 0; i < bytesLength + 4 - lengthFlag; i++) {
+//            if (i == 0)
+//                ints[lengthFlag / 4 - 1] |= bytes[lengthFlag - 4 + i] << 8 * (bytesLength + 4 - lengthFlag - i - 1);
+//            else
+//                ints[lengthFlag / 4 - 1] |= (bytes[lengthFlag - 4 + i] & 0xff) << 8 * (bytesLength + 4 - lengthFlag - i - 1);
+//        }
+//        return ints;
+//    }
+
 
     /**
-     * byte[] 转int[]
-     *
-     * @param bytes
-     * @return
-     */
-
-    public int[] bytesToInts(byte[] bytes) {
-        int bytesLength = bytes.length;
-        int[] ints = new int[bytesLength % 4 == 0 ? bytesLength / 4 : bytesLength / 4 + 1];
-        int lengthFlag = 4;
-        while (lengthFlag <= bytesLength) {
-            ints[lengthFlag / 4 - 1] = (bytes[lengthFlag - 4] << 24) | (bytes[lengthFlag - 3] & 0xff) << 16 | (bytes[lengthFlag - 2] & 0xff) << 8 | (bytes[lengthFlag - 1] & 0xff);
-            lengthFlag += 4;
-        }
-        for (int i = 0; i < bytesLength + 4 - lengthFlag; i++) {
-            if (i == 0)
-                ints[lengthFlag / 4 - 1] |= bytes[lengthFlag - 4 + i] << 8 * (bytesLength + 4 - lengthFlag - i - 1);
-            else
-                ints[lengthFlag / 4 - 1] |= (bytes[lengthFlag - 4 + i] & 0xff) << 8 * (bytesLength + 4 - lengthFlag - i - 1);
-        }
-        return ints;
-    }
-
-
-    /**
-     * 将int 转换成byte[] 高字节在后
+     * 将int 转换成byte[] 低位在前，高字节在后
      *
      * @param value 被转换字节
      * @return byte[]
      */
-    public byte[] intToBytes(int value) {
+    public static byte[] intToBytes(int value) {
         byte[] src = new byte[4];
         src[3] = (byte) ((value >> 24) & 0xFF);
         src[2] = (byte) ((value >> 16) & 0xFF);
@@ -336,39 +366,9 @@ public enum  ByteUtil {
         return src;
     }
 
-    /**
-     * short 转字节数组
-     * @param value
-     * @return
-     */
-    public byte[] shortToByteArray(short value){
-        byte[] bytes =new byte[2];
-        bytes[1] = (byte) ((value>>8)&0xFF);
-        bytes[0] = (byte) (value&0xFF);
-        return  bytes;
-    }
 
 
-    public int byteArrayToInt(byte[] bArr) {
-        if (bArr.length != 4) {
-            return -1;
-        }
-        return (((bArr[3] & 0xff) << 24) | ((bArr[2] & 0xff) << 16) | ((bArr[1] & 0xff) << 8) | ((bArr[0] & 0xff)));
-    }
 
-
-    /**
-     * 字节数组转成short
-     * @param bytes 字节数组
-     * @return 一个short 数据
-     */
-    public  short byteArrayToShort(byte[] bytes){
-        if (bytes.length!=2){
-            return -1;
-        }
-
-        return (short) (((bytes[1] & 0xff) << 8) | ((bytes[0] & 0xff)));
-    }
 
     public String byteArrayToText(byte[] data) {
         StringBuilder sb = new StringBuilder();

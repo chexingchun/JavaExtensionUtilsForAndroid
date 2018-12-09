@@ -33,19 +33,12 @@
             layout="@layout/layout_toolbar"
             app:title="@{title}" />
 
-        <android.support.v7.widget.AppCompatButton
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/btn_byte_array_to_short"
-            style="@style/ButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/material_layout_view_top_margin_8dp"
-            android:text="ByteArrayToShort" />
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_short_to_byte_array"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_layout_view_top_margin_8dp"
-            android:text="ShortToByteArray" />
+            android:text="查看Log" />
+
     </LinearLayout>
 </layout>
