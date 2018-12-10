@@ -37,6 +37,8 @@
             android:id="@+id/btn_byte_array_to_short"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_32sp"
             android:layout_marginTop="@dimen/material_layout_view_top_margin_8dp"
             android:text="查看Log" />
 

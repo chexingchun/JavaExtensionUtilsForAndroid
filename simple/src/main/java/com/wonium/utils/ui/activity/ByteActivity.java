@@ -77,6 +77,22 @@ public class ByteActivity extends BaseActivity {
         Logger.d("byteArrayToInt Big-Endian-->"+ByteUtil.INSTANCE.byteArrayToInt(byteInt,Endian.BIG));
         Logger.d("byteArrayToInt Little-Endian-->"+ByteUtil.INSTANCE.byteArrayToInt(byteInt,Endian.LITTLE));
 
+        // intToByteArray 83951936
+        Logger.d("intToByteArray Big-Endian-->"+ByteUtil.INSTANCE.printByteArrayToBinary(ByteUtil.INSTANCE.intToByteArray(83951936,Endian.BIG)));
+        Logger.d("intToByteArray Little-Endian-->"+ByteUtil.INSTANCE.printByteArrayToBinary(ByteUtil.INSTANCE.intToByteArray(83951936,Endian.LITTLE)));
+
+
+        // byteArrayToFloat
+        byte[] byteFloat=new byte[4];
+        byteFloat[0]=1;
+        byteFloat[1]=0;
+        byteFloat[2]=0;
+        byteFloat[3]=0;
+
+        Logger.d("byteArrayToFloat Big-Endian-->"+ByteUtil.INSTANCE.byteArrayToFloat(byteFloat,Endian.BIG));
+        Logger.d("byteArrayToFloat Little-Endian-->"+ByteUtil.INSTANCE.byteArrayToFloat(byteFloat,Endian.LITTLE));
+
+
     }
 
     @Override
