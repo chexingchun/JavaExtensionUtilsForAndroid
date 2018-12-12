@@ -64,7 +64,7 @@ public enum VerifyUtil {
      * 手机号码，中间4位星号替换
      *
      * @param phone 手机号
-     * @return
+     * @return 中间四位数被星号替换的手机号
      */
     public String phoneNoHide(String phone) {
         // 括号表示组，被替换的部分$n表示第n组的内容
