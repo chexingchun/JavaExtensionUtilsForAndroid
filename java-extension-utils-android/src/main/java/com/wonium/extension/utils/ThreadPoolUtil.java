@@ -22,6 +22,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -90,5 +92,15 @@ public enum ThreadPoolUtil {
         futureTask.cancel(true);
     }
 
-
+    /**
+     * 定时任务
+     * @param runnable
+     * @param initialDelay
+     * @param period
+     * @param timeUnit
+     */
+    public void schedule(Runnable runnable,long initialDelay,long period,TimeUnit timeUnit){
+        ScheduledExecutorService service =new ScheduledThreadPoolExecutor(2,threadFactory);
+        service.scheduleAtFixedRate(runnable,initialDelay,period,timeUnit);
+    }
 }
