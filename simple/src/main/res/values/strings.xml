@@ -1,8 +1,8 @@
-<resources  >
+<resources>
     <string name="app_name">工具包</string>
     <string name="action_settings">Settings</string>
     <string name="item_acache">ACacheUtil</string>
-    <string name="item_activity_manager" >ActivityManagerUtils</string>
+    <string name="item_activity_manager">ActivityManagerUtils</string>
     <string name="item_bitmap">BitmapUtil</string>
     <string name="item_byte">ByteUtil</string>
     <string name="item_color">ColorUtil</string>

@@ -83,8 +83,12 @@ public class MainActivity extends BaseActivity implements MainView {
                 case 4:
                     IntentUtil.INSTANCE.toActivity(this, DataCleanActivity.class);
                     break;
+
                 case 5:
+                    IntentUtil.INSTANCE.toActivity(this,DateActivity.class);
+                    break;
                 case 6:
+                    break;
                 case 7:
                     IntentUtil.INSTANCE.toActivity(this, DeviceActivity.class);
                     break;

@@ -22,6 +22,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +49,7 @@ public enum ThreadPoolUtil {
     /**
      *阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
      */
+   private static ScheduledExecutorService scheduledExecutorService ;
 
     private static BlockingQueue workQueue = new ArrayBlockingQueue(30);
     /**
@@ -71,6 +74,7 @@ public enum ThreadPoolUtil {
         int maxPoolSize = 50;
         int keepAliveTime = 1000 * 30;
         threadPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue, threadFactory);
+        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
     }
 
 
@@ -90,5 +94,22 @@ public enum ThreadPoolUtil {
         futureTask.cancel(true);
     }
 
+    /**
+     * 定时任务
+     * @param runnable
+     * @param initialDelay 首次执行间隔时间
+     * @param period 之后每次间隔时间
+     * @param timeUnit 时间单位
+     */
+    public void schedule(Runnable runnable,long initialDelay,long period,TimeUnit timeUnit){
+        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
+        scheduledExecutorService.scheduleAtFixedRate(runnable,initialDelay,period,timeUnit);
+    }
 
+    /**
+     * 取消定时任务
+     */
+    public void cancel(){
+        scheduledExecutorService.shutdownNow();
+    }
 }
