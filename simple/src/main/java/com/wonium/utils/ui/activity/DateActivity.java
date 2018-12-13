@@ -17,32 +17,18 @@
 
 package com.wonium.utils.ui.activity;
 
-import android.support.v7.widget.AppCompatButton;
-
 import com.wonium.example.R;
-import com.wonium.utils.ScheduledButton;
-import com.wonium.extension.utils.ToastUtil;
 
 public class DateActivity extends BaseActivity {
-    private ScheduledButton btnTime;
-    private AppCompatButton btnStop;
+
     @Override
     public void initView(int layoutResID) {
         setContentView(layoutResID);
-        btnTime =findViewById(R.id.btn_time);
-        btnStop =findViewById(R.id.btn_stop);
+
     }
 
     @Override
     public void initListener() {
-        btnTime.setOnClickListener(v -> {btnTime.start();
-        ToastUtil.INSTANCE.show(getContext(),"开始");
-        });
-
-        btnStop.setOnClickListener(v -> {
-            btnTime.cancel();
-            ToastUtil.INSTANCE.show(getContext(),"暂停");
-        });
 
     }
 

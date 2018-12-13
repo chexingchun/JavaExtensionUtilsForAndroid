@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  wonium
+ * Copyright  2018.  wonium
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.wonium.extension.utils;
@@ -28,6 +29,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @ClassName: ThreadPoolUtil.java
  * @Description: 类描述
@@ -45,11 +47,9 @@ public enum ThreadPoolUtil {
      * 实例对象
      */
     INSTANCE;
-
     /**
-     *阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
+     * 阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
      */
-   private static ScheduledExecutorService scheduledExecutorService ;
 
     private static BlockingQueue workQueue = new ArrayBlockingQueue(30);
     /**
@@ -74,7 +74,6 @@ public enum ThreadPoolUtil {
         int maxPoolSize = 50;
         int keepAliveTime = 1000 * 30;
         threadPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue, threadFactory);
-        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
     }
 
 
@@ -93,23 +92,28 @@ public enum ThreadPoolUtil {
     public void cancel(FutureTask futureTask) {
         futureTask.cancel(true);
     }
-
     /**
      * 定时任务
+     *
      * @param runnable
      * @param initialDelay 首次执行间隔时间
-     * @param period 之后每次间隔时间
-     * @param timeUnit 时间单位
+     * @param period       之后每次间隔时间
+     * @param timeUnit     时间单位
      */
-    public void schedule(Runnable runnable,long initialDelay,long period,TimeUnit timeUnit){
-        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
-        scheduledExecutorService.scheduleAtFixedRate(runnable,initialDelay,period,timeUnit);
+
+    public ScheduledExecutorService schedule(Runnable runnable, long initialDelay, long period, TimeUnit timeUnit) {
+        ScheduledExecutorService  scheduledExecutorService = new ScheduledThreadPoolExecutor(2, threadFactory);
+        scheduledExecutorService.scheduleAtFixedRate(runnable, initialDelay, period, timeUnit);
+        return scheduledExecutorService;
     }
 
     /**
      * 取消定时任务
      */
-    public void cancel(){
-        scheduledExecutorService.shutdownNow();
+    public void cancel(ScheduledExecutorService service) {
+        if (service!=null){
+            service.shutdownNow();
+        }
     }
+
 }

@@ -18,9 +18,7 @@ package com.wonium.utils.ui.activity;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityBitmapBinding;
