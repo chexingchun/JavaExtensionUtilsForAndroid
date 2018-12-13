@@ -28,6 +28,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @ClassName: ThreadPoolUtil.java
  * @Description: 类描述
@@ -47,9 +48,9 @@ public enum ThreadPoolUtil {
     INSTANCE;
 
     /**
-     *阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
+     * 阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程。
      */
-   private static ScheduledExecutorService scheduledExecutorService ;
+    private static ScheduledExecutorService scheduledExecutorService;
 
     private static BlockingQueue workQueue = new ArrayBlockingQueue(30);
     /**
@@ -74,7 +75,7 @@ public enum ThreadPoolUtil {
         int maxPoolSize = 50;
         int keepAliveTime = 1000 * 30;
         threadPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue, threadFactory);
-        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
+        scheduledExecutorService = new ScheduledThreadPoolExecutor(2, threadFactory);
     }
 
 
@@ -96,20 +97,21 @@ public enum ThreadPoolUtil {
 
     /**
      * 定时任务
+     *
      * @param runnable
      * @param initialDelay 首次执行间隔时间
-     * @param period 之后每次间隔时间
-     * @param timeUnit 时间单位
+     * @param period       之后每次间隔时间
+     * @param timeUnit     时间单位
      */
-    public void schedule(Runnable runnable,long initialDelay,long period,TimeUnit timeUnit){
-        scheduledExecutorService  =new ScheduledThreadPoolExecutor(2,threadFactory);
-        scheduledExecutorService.scheduleAtFixedRate(runnable,initialDelay,period,timeUnit);
+    public void schedule(Runnable runnable, long initialDelay, long period, TimeUnit timeUnit) {
+        scheduledExecutorService = new ScheduledThreadPoolExecutor(2, threadFactory);
+        scheduledExecutorService.scheduleAtFixedRate(runnable, initialDelay, period, timeUnit);
     }
 
     /**
      * 取消定时任务
      */
-    public void cancel(){
+    public void cancel() {
         scheduledExecutorService.shutdownNow();
     }
 }
