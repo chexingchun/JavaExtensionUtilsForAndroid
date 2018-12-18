@@ -26,7 +26,6 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
@@ -48,7 +47,7 @@
         <activity android:name="com.wonium.utils.ui.activity.ExpandListActivity" />
         <activity android:name="com.wonium.utils.ui.activity.BitmapActivity" />
         <activity android:name="com.wonium.utils.ui.activity.ByteActivity" />
-        <activity android:name="com.wonium.utils.ui.activity.DateActivity"></activity>
+        <activity android:name="com.wonium.utils.ui.activity.DateActivity"/>
     </application>
 
 </manifest>
