@@ -262,6 +262,9 @@
     <color name="limeGreen">#32cd32</color>
     <!-- 暗瓦灰色 -->
     <color name="darkSlateGray">#2f4f4f</color>
+    #383A3E
+    <color name="darkGray1">#383A3E</color>
+
     <!-- 暗瓦灰色 -->
     <color name="darkSlateGrey">#2f4f4f</color>
     <!-- 海绿色 -->
