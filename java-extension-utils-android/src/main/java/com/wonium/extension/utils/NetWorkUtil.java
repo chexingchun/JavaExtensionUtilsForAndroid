@@ -40,7 +40,7 @@ import java.util.List;
  * @UpdateDescription: 更新说明
  * @Version: 1.0.0
  */
-public enum  NetWorkUtil {
+public enum NetWorkUtil {
     /**
      * 实例对象
      */
@@ -59,12 +59,14 @@ public enum  NetWorkUtil {
      * 当前链接是cmnet
      */
     public static final int NETTYPE_CMNET = 3;
+
     /**
      * 检测网络是否连接
+     *
      * @param context 上下文
-     * @return  连接 true 断网 false
+     * @return 连接 true 断网 false
      */
-    public  boolean isNetConnected(Context context) {
+    public boolean isNetConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -76,6 +78,7 @@ public enum  NetWorkUtil {
 
     /**
      * 检测wifi是否连接
+     *
      * @param context 上下文
      * @return
      */
@@ -90,6 +93,7 @@ public enum  NetWorkUtil {
 
     /**
      * 检测3G是否连接
+     *
      * @param context 上下文
      * @return
      */
@@ -104,9 +108,10 @@ public enum  NetWorkUtil {
 
     /**
      * 检测GPS是否打开
+     *
      * @return
      */
-    public  boolean isGpsEnabled(Context context) {
+    public boolean isGpsEnabled(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         assert lm != null;
         List<String> accessibleProviders = lm.getProviders(true);
@@ -121,7 +126,7 @@ public enum  NetWorkUtil {
     /**
      * 判断网络是否可用
      */
-    public  boolean isNetworkAvailable(Context context) {
+    public boolean isNetworkAvailable(Context context) {
 
         boolean isConnect = false;
         try {
@@ -142,14 +147,13 @@ public enum  NetWorkUtil {
     }
 
 
-
     /**
      * 获取网络连接状态
      *
      * @param context
      * @return
      */
-    public  int getNetWorkType(Context context) {
+    public int getNetWorkType(Context context) {
         int netType = 0;
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert manager != null;
@@ -181,7 +185,7 @@ public enum  NetWorkUtil {
      * @param useIPv4 是否用 IPv4
      * @return IP 地址
      */
-    public  String getIPAddress(final boolean useIPv4) {
+    public String getIPAddress(final boolean useIPv4) {
         try {
             for (Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces(); nis.hasMoreElements(); ) {
                 NetworkInterface ni = nis.nextElement();

@@ -39,10 +39,15 @@ public enum Md5Util {
      */
     INSTANCE;
 
-    public String stringToMD5(String plainText) {
+    /**
+     * 字符串MD5加密
+     * @param text 被加密的字符串
+     * @return 加密后的字符串
+     */
+    public String toMD5Text(String text) {
         byte[] bytes;
         try {
-            bytes = MessageDigest.getInstance("md5").digest(plainText.getBytes());
+            bytes = MessageDigest.getInstance("md5").digest(text.getBytes());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("not found this md5 method！");
         }
@@ -55,6 +60,6 @@ public enum Md5Util {
     }
 
     public static void main(String[] args) {
-        System.out.print(Md5Util.INSTANCE.stringToMD5("wonium"));
+        System.out.print(Md5Util.INSTANCE.toMD5Text("wonium"));
     }
 }
