@@ -16,9 +16,11 @@
 
 package com.wonium.extension.utils;
 
+import com.google.common.primitives.Ints;
 import com.wonium.extension.Endian;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * @ClassName: ByteUtil.java
@@ -270,6 +272,16 @@ public enum ByteUtil {
                 + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1)
                 + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1)
                 + (byte) ((b >> 1) & 0x1) + (byte) (b & 0x1));
+    }
+
+    /**
+     * int 数组转换为list
+     *
+     * @param arrays 整型数组
+     * @return List 集合
+     */
+    public List<Integer> intArrayToList(int[] arrays) {
+        return  Ints.asList(arrays);
     }
 
     /**

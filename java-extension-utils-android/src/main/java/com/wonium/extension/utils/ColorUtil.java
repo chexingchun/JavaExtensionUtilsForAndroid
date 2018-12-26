@@ -18,10 +18,6 @@ package com.wonium.extension.utils;
 
 import android.graphics.Color;
 
-import com.google.common.primitives.Ints;
-
-import java.util.List;
-
 /**
  * @ClassName: ColorUtil.java
  * @Description: 颜色工具类
@@ -39,10 +35,6 @@ public enum ColorUtil {
      * 实例对象
      */
     INSTANCE;
-    /**
-     * 彩虹色
-     */
-    private int[] textColorList = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.rgb(255, 0, 255), Color.CYAN};
 
 
     public int intToColor(int co) {
@@ -51,23 +43,6 @@ public enum ColorUtil {
         int blue = (co & 0x0000ff);
         return Color.rgb(red, green, blue);
     }
-
-    /**
-     * int 数组转换为list
-     *
-     * @param colors
-     * @return
-     */
-    public List<Integer> colorArrayToList(int[] colors) {
-        return Ints.asList(colors);
-    }
-
-    public List<Integer> getSubColors(int start, int length) {
-        int[] subColor = new int[length];
-        System.arraycopy(ColorUtil.INSTANCE.textColorList, start, subColor, 0, length);
-        return colorArrayToList(subColor);
-    }
-
 
     /**
      * 生成两个颜色之间的过渡颜色
@@ -143,6 +118,4 @@ public enum ColorUtil {
         }
         return currentColor;
     }
-
-
 }
