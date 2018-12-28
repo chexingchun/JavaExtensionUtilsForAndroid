@@ -44,6 +44,7 @@ import java.util.List;
  * @UpdateDescription: 更新说明
  * @Version: 1.0.0
  */
+
 public class MainActivity extends BaseActivity implements MainView {
 
     private MainFunctionAdapter mAdapter;
