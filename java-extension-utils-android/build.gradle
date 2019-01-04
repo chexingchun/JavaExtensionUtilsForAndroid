@@ -100,7 +100,7 @@ bintray {
     pkg {
         repo = 'maven'  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
         name = 'android-extensions-utils'  //需更改，这个名字就是你在Bintray上创建Package的名字，这里会查询，如果此包不存在就会创建一个。
-//        userOrg = 'rumblefish'    //组织名称 organization
+        userOrg = 'rumblefish'    //组织名称 organization
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
