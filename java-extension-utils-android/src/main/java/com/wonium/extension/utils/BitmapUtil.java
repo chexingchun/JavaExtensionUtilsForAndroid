@@ -145,7 +145,7 @@ public enum BitmapUtil {
     /**
      * Bitmap 翻转
      *
-     * @param srcBitmap 原Bitmapf
+     * @param srcBitmap 原Bitmap
      * @return new bitmap
      */
     public  Bitmap flippingBitmap(Bitmap srcBitmap) {

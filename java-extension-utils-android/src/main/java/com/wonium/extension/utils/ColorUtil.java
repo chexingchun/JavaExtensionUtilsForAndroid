@@ -18,13 +18,9 @@ package com.wonium.extension.utils;
 
 import android.graphics.Color;
 
-import com.google.common.primitives.Ints;
-
-import java.util.List;
-
-/**  
+/**
  * @ClassName: ColorUtil.java
- * @Description: 颜色工具类 
+ * @Description: 颜色工具类
  * @Author: Wonium
  * @E-mail: wonium@qq.com
  * @Blog: https://blog.wonium.com
@@ -34,18 +30,14 @@ import java.util.List;
  * @UpdateDescription: 更新说明
  * @Version: 1.0.0
  */
-public enum  ColorUtil {
+public enum ColorUtil {
     /**
      * 实例对象
      */
     INSTANCE;
-    /**
-     * 彩虹色
-     */
-    private   int[] textColorList = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.rgb(255, 0, 255), Color.CYAN};
 
 
-    public  int intToColor(int co) {
+    public int intToColor(int co) {
         int red = (co & 0xff0000) >> 16;
         int green = (co & 0x00ff00) >> 8;
         int blue = (co & 0x0000ff);
@@ -53,28 +45,13 @@ public enum  ColorUtil {
     }
 
     /**
-     * int 数组转换为list
-     * @param colors
-     * @return
-     */
-    public   List<Integer>  colorArrayToList(int[] colors){
-        return Ints.asList(colors);
-    }
-
-    public  List<Integer> getSubColors(int start,int length){
-        int[] subColor=new int[length];
-        System.arraycopy(ColorUtil.INSTANCE.textColorList,start,subColor,0,length);
-        return colorArrayToList(subColor);
-    }
-
-
-    /**
      * 生成两个颜色之间的过渡颜色
-     * @param currColor 起始颜色
+     *
+     * @param currColor   起始颜色
      * @param targetColor 结束颜色
      * @return
      */
-    public  int gradualChangeColor(int currColor, int targetColor) {
+    public int gradualChangeColor(int currColor, int targetColor) {
         int currentColor;
         int currRed = (currColor & 0xff0000) >> 16;
         int currGreen = (currColor & 0x00ff00) >> 8;
@@ -127,7 +104,7 @@ public enum  ColorUtil {
         return currentColor;
     }
 
-    public  int cycleColor(int currentColor,int[] arrays) {
+    public int cycleColor(int currentColor, int[] arrays) {
         for (int i = 0; i < arrays.length; i++) {
             if (ColorUtil.INSTANCE.intToColor(currentColor) == ColorUtil.INSTANCE.intToColor(arrays[i])) {
                 if (i == arrays.length - 1) {
@@ -141,6 +118,4 @@ public enum  ColorUtil {
         }
         return currentColor;
     }
-
-
 }

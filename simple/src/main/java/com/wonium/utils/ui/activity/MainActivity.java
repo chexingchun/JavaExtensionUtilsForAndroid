@@ -21,7 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.wonium.example.R;
-import com.wonium.extension.utils.GsonUtil;
 import com.wonium.extension.utils.IntentUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
@@ -30,7 +29,6 @@ import com.wonium.utils.presenter.MainPresenter;
 import com.wonium.utils.presenter.impl.MainPresenterImpl;
 import com.wonium.utils.ui.view.MainView;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -46,6 +44,7 @@ import java.util.List;
  * @UpdateDescription: 更新说明
  * @Version: 1.0.0
  */
+
 public class MainActivity extends BaseActivity implements MainView {
 
     private MainFunctionAdapter mAdapter;

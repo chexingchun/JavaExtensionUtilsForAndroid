@@ -22,23 +22,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresPermission;
-import android.telephony.SubscriptionInfo;
-import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.List;
 
 /**
  * @ClassName: DeviceUtil.java
@@ -168,39 +161,7 @@ public enum DeviceUtil {
         }
         return ip;
     }
-    /**
-     * 获取SSID
-     * @param activity 上下文
-     * @return  WIFI 的SSID
-     */
-    public String getWIFISSID(Activity activity) {
-         String ssid="unknown id";
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O||Build.VERSION.SDK_INT==Build.VERSION_CODES.P) {
-
-            WifiManager mWifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-            assert mWifiManager != null;
-            WifiInfo info = mWifiManager.getConnectionInfo();
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                return info.getSSID();
-            } else {
-                return info.getSSID().replace("\"", "");
-            }
-        } else if (Build.VERSION.SDK_INT==Build.VERSION_CODES.O_MR1){
-
-            ConnectivityManager connManager = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            assert connManager != null;
-            NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-            if (networkInfo.isConnected()) {
-                if (networkInfo.getExtraInfo()!=null){
-                    return networkInfo.getExtraInfo().replace("\"","");
-                }
-            }
-        }
-        return ssid;
-    }
     /**
      * 获取手机号
      * @param context 上下文
@@ -236,6 +197,8 @@ public enum DeviceUtil {
     public String getAndroidId(Context context){
         return  Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ANDROID_ID);
     }
+
+
 
 }
 

@@ -43,8 +43,8 @@ public enum IntentUtil {
 
     /**
      * 跳转到拨号页面
-     * @param context
-     * @param phone
+     * @param context 上下文
+     * @param phone 手机号
      */
     public void callPhone(Context context, String phone) {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
