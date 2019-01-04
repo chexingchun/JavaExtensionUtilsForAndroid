@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import com.wonium.example.R;
 import com.wonium.example.databinding.ActivityDeviceBinding;
 import com.wonium.extension.utils.DeviceUtil;
+import com.wonium.extension.utils.NetWorkUtil;
 import com.wonium.extension.utils.StringUtil;
 import com.wonium.extension.utils.ToastUtil;
 
@@ -82,7 +83,7 @@ public class DeviceActivity extends BaseActivity {
                 .append(DeviceUtil.INSTANCE.getModel())
                 .append("\nAndroid_ID-->")
                 .append(DeviceUtil.INSTANCE.getAndroidId(this))
-                .append("\nWIFI SSID-->").append(DeviceUtil.INSTANCE.getWIFISSID(this));
+                .append("\nWIFI SSID-->").append(NetWorkUtil.INSTANCE.getWifiSsid(this));
         mBinding.tvDeviceResult.setText(builder);
     }
     private void onDenied(){
